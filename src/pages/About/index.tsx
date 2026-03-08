@@ -334,9 +334,9 @@ export default function About() {
                         {t.footer.copyright}
                     </p>
                     <div className="flex flex-wrap justify-center gap-4 text-xs font-medium text-slate-500">
-                        <a href="#" className="hover:text-[#E84A27] transition-colors">{t.footer.terms}</a>
-                        <a href="#" className="hover:text-[#E84A27] transition-colors">{t.footer.privacy}</a>
-                        <a href="#" className="hover:text-[#E84A27] transition-colors">{t.footer.disclaimer}</a>
+                        <Link to="/terms" className="hover:text-[#E84A27] transition-colors">{t.footer.terms}</Link>
+                        <Link to="/terms" className="hover:text-[#E84A27] transition-colors">{t.footer.privacy}</Link>
+                        <Link to="/terms" className="hover:text-[#E84A27] transition-colors">{t.footer.disclaimer}</Link>
                         <a href="mailto:support@iguide.chat" className="hover:text-[#E84A27] transition-colors">{t.footer.contact}</a>
                     </div>
                 </div>
