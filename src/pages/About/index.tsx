@@ -164,7 +164,9 @@ export default function About() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
                         <a
-                            href="#dorm-viewer"
+                            href="https://iguide.chat/dorms"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="group flex flex-col h-full bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-slate-200 hover:shadow-xl hover:border-orange-200 transition-all duration-300 relative overflow-hidden"
                         >
                             <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-orange-50 to-transparent rounded-bl-full -mr-10 -mt-10 transition-transform duration-500 group-hover:scale-110"></div>
@@ -205,7 +207,9 @@ export default function About() {
                         transition={{ duration: 0.6, delay: 0.3 }}
                     >
                         <a
-                            href="#ai-chatbot"
+                            href="https://iguide.chat/chat"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="group flex flex-col h-full bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-slate-200 hover:shadow-xl hover:border-blue-200 transition-all duration-300 relative overflow-hidden"
                         >
                             <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-blue-50 to-transparent rounded-bl-full -mr-10 -mt-10 transition-transform duration-500 group-hover:scale-110"></div>
