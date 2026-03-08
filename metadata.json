@@ -1,0 +1,5 @@
+{
+  "name": "Remix: Remix: iGuide chat",
+  "description": "官方主页 (Homepage): 你的品牌大门\n核心信息： “专为 UIUC 学生打造的终极校园工具箱”。\n\n结构： 顶部 Banner 是一个极简的介绍，下方并排给出两个清晰的入口（Cards）：\n\n👉 入口 A：Dorm Viewer - \"Explore \u0026 Compare UIUC Housing\"\n\n👉 入口 B：AI Chatbot - \"Your 24/7 Illini Assistant\"\n\n作用： 承接直接输入网址的访客，让他们自己选择去哪个功能。",
+  "requestFramePermissions": []
+}
