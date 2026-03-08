@@ -42,10 +42,22 @@ export default function About() {
                 dorms: '宿舍楼全方位覆盖',
                 satisfaction: '用户满意度'
             },
+            legal: {
+                title: '合规与法律声明',
+                affiliation: '非官方声明',
+                affiliationText: 'iGuide 是一个由学生主导的独立项目，并非伊利诺伊大学厄巴纳-香槟分校 (UIUC) 的官方服务。我们的内容不受大学住宿或任何官方部门的认可或验证。',
+                aiDisclaimer: 'AI 准确性声明',
+                aiDisclaimerText: 'iGuide Chatbot 使用大型语言模型和 RAG 技术。虽然我们努力确保准确性，但 AI 偶尔可能会生成不正确或有偏差的信息。用户应与大学官方资源交叉核对重要的学术或财务决定。',
+                ip: '商标与版权',
+                ipText: 'iGuide™ 是一个独立项目。所有与 UIUC 相关的标志和名称均为其各自所有者的知识产权。',
+                privacy: '隐私与数据处理简述',
+                privacyText: '我们重视您的隐私。您的对话数据仅用于提高 AI 的响应质量，通过安全加密的方式处理和存储。'
+            },
             footer: {
-                copyright: '© 2026 iGuide. 专为 Illini 社区打造。保留所有权利。',
+                copyright: '© 2026 iGuide Project. 保留所有权利。',
                 privacy: '隐私政策',
                 terms: '服务条款',
+                disclaimer: '免责声明',
                 contact: '联系我们'
             }
         },
@@ -84,10 +96,22 @@ export default function About() {
                 dorms: 'Dorms Fully Covered',
                 satisfaction: 'User Satisfaction'
             },
+            legal: {
+                title: 'Compliance & Legal',
+                affiliation: 'Affiliation Disclaimer',
+                affiliationText: 'iGuide is an independent student-led project and is not an official service of the University of Illinois Urbana-Champaign (UIUC). Our content is not endorsed or verified by the University Housing or any official department.',
+                aiDisclaimer: 'AI Accuracy Disclaimer',
+                aiDisclaimerText: 'Our AI Chatbot uses Large Language Models and RAG technology. While we strive for accuracy, AI can occasionally generate incorrect or biased information. Users should cross-reference important academic or financial decisions with official university resources.',
+                ip: 'Intellectual Property',
+                ipText: 'iGuide™ is an independent project. All UIUC-related logos and names are the intellectual property of their respective owners.',
+                privacy: 'Privacy Note',
+                privacyText: 'We value your privacy. Your conversation data is used solely to improve the AI\'s response quality and is processed securely and stored in encrypted databases.'
+            },
             footer: {
-                copyright: '© 2026 iGuide. Built for the Illini community. All rights reserved.',
-                privacy: 'Privacy',
-                terms: 'Terms',
+                copyright: '© 2026 iGuide Project. All rights reserved.',
+                privacy: 'Privacy Policy',
+                terms: 'Terms of Service',
+                disclaimer: 'Disclaimers',
                 contact: 'Contact'
             }
         }
@@ -274,20 +298,46 @@ export default function About() {
                 </div>
             </section>
 
+            {/* Legal / Compliance Section */}
+            <section className="py-12 bg-slate-50 border-t border-slate-200">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h3 className="text-xl font-bold text-[#13294B] mb-8 text-center">{t.legal.title}</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div>
+                            <h4 className="text-sm font-semibold text-[#13294B] mb-3">{t.legal.affiliation}</h4>
+                            <p className="text-xs text-slate-500 leading-relaxed">{t.legal.affiliationText}</p>
+                        </div>
+                        <div>
+                            <h4 className="text-sm font-semibold text-[#13294B] mb-3">{t.legal.aiDisclaimer}</h4>
+                            <p className="text-xs text-slate-500 leading-relaxed">{t.legal.aiDisclaimerText}</p>
+                        </div>
+                        <div>
+                            <h4 className="text-sm font-semibold text-[#13294B] mb-3">{t.legal.ip}</h4>
+                            <p className="text-xs text-slate-500 leading-relaxed">{t.legal.ipText}</p>
+                        </div>
+                        <div>
+                            <h4 className="text-sm font-semibold text-[#13294B] mb-3">{t.legal.privacy}</h4>
+                            <p className="text-xs text-slate-500 leading-relaxed">{t.legal.privacyText}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* Footer */}
-            <footer className="bg-slate-50 py-12">
+            <footer className="bg-white py-8 border-t border-slate-200">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
                     <div className="flex items-center gap-2">
-                        <Compass className="w-6 h-6 text-[#E84A27]" />
-                        <span className="text-xl font-bold tracking-tight text-[#13294B]">iGuide</span>
+                        <Compass className="w-5 h-5 text-[#E84A27]" />
+                        <span className="text-lg font-bold tracking-tight text-[#13294B]">iGuide</span>
                     </div>
-                    <p className="text-slate-500 text-sm text-center md:text-left">
+                    <p className="text-slate-400 text-xs text-center md:text-left">
                         {t.footer.copyright}
                     </p>
-                    <div className="flex gap-6 text-sm font-medium text-slate-500">
-                        <a href="#" className="hover:text-[#E84A27] transition-colors">{t.footer.privacy}</a>
+                    <div className="flex flex-wrap justify-center gap-4 text-xs font-medium text-slate-500">
                         <a href="#" className="hover:text-[#E84A27] transition-colors">{t.footer.terms}</a>
-                        <a href="#" className="hover:text-[#E84A27] transition-colors">{t.footer.contact}</a>
+                        <a href="#" className="hover:text-[#E84A27] transition-colors">{t.footer.privacy}</a>
+                        <a href="#" className="hover:text-[#E84A27] transition-colors">{t.footer.disclaimer}</a>
+                        <a href="mailto:support@iguide.chat" className="hover:text-[#E84A27] transition-colors">{t.footer.contact}</a>
                     </div>
                 </div>
             </footer>
