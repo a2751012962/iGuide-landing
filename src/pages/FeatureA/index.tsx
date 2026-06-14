@@ -1,15 +1,18 @@
 import { Compass, Globe } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Seo from '../../components/Seo';
 
 export default function FeatureA() {
     const [lang, setLang] = useState<'zh' | 'en'>('zh');
 
     const content = {
         zh: {
+            seo: { title: '功能 A — iGuide', description: 'iGuide 功能 A 页面，专为 UIUC 学生设计的校园工具。' },
             nav: { about: '关于我们', featureA: '功能A', featureB: '功能B', login: '登录', signup: '免费注册', lang: 'EN' },
         },
         en: {
+            seo: { title: 'Feature A — iGuide', description: 'iGuide Feature A page, a campus tool built for UIUC students.' },
             nav: { about: 'About Us', featureA: 'Feature A', featureB: 'Feature B', login: 'Log in', signup: 'Sign up free', lang: '中文' },
         }
     };
@@ -18,6 +21,7 @@ export default function FeatureA() {
 
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
+            <Seo title={t.seo.title} description={t.seo.description} path="/featureA" lang={lang} />
             {/* Navigation */}
             <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

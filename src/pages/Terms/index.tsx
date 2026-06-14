@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Compass, ArrowLeft, Globe } from 'lucide-react';
+import Seo from '../../components/Seo';
 
 export default function Terms() {
     const [lang, setLang] = useState<'zh' | 'en'>('zh');
 
     const content = {
         en: {
+            seo: {
+                title: 'Terms of Service & Legal Disclaimer — iGuide',
+                description: 'iGuide Terms of Service, AI accuracy and non-affiliation disclaimers, and privacy notes. iGuide is an independent, student-led project, not affiliated with UIUC.'
+            },
             nav: {
                 back: 'Back to Home',
                 lang: '中文'
@@ -50,6 +55,10 @@ export default function Terms() {
             footer: '© 2026 iGuide Project. All rights reserved.'
         },
         zh: {
+            seo: {
+                title: '服务条款与法律免责声明 — iGuide',
+                description: 'iGuide 服务条款、AI 准确性与非官方声明、数据与隐私说明。iGuide 是由学生主导的独立项目，与 UIUC 无官方关联。'
+            },
             nav: {
                 back: '返回首页',
                 lang: 'EN'
@@ -98,6 +107,7 @@ export default function Terms() {
 
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-800 selection:bg-orange-100 selection:text-orange-900">
+            <Seo title={t.seo.title} description={t.seo.description} path="/terms" lang={lang} type="article" />
             {/* Simple Navigation */}
             <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

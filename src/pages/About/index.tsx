@@ -2,12 +2,17 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Home, MessageSquare, Compass, ArrowRight, CheckCircle2, Users, Star, Shield, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import Seo from '../../components/Seo';
 
 export default function About() {
     const [lang, setLang] = useState<'zh' | 'en'>('zh');
 
     const content = {
         zh: {
+            seo: {
+                title: 'iGuide — 专为 UIUC 学生打造的终极校园工具箱',
+                description: 'iGuide 为 UIUC 学生提供宿舍对比（真实评价、设施与房型）和 24/7 中英双语 AI 助手，解答选课、教授评分与校园生活的一切疑问。'
+            },
             nav: { about: '关于我们', featureA: '功能A', featureB: '功能B', login: '登录', signup: '免费注册', lang: 'EN' },
             hero: {
                 badge: '已有 2,000+ UIUC 学生加入',
@@ -62,6 +67,10 @@ export default function About() {
             }
         },
         en: {
+            seo: {
+                title: 'iGuide — UIUC Dorm Viewer & AI Campus Assistant',
+                description: 'The ultimate campus toolkit for UIUC students. Compare dorms with real student reviews and get 24/7 answers on courses, professors, and campus life from a bilingual AI assistant.'
+            },
             nav: { about: 'About Us', featureA: 'Feature A', featureB: 'Feature B', login: 'Log in', signup: 'Sign up free', lang: '中文' },
             hero: {
                 badge: 'Trusted by 2,000+ UIUC Students',
@@ -121,6 +130,7 @@ export default function About() {
 
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-800 selection:bg-orange-100 selection:text-orange-900">
+            <Seo title={t.seo.title} description={t.seo.description} path="/about" lang={lang} />
             {/* Navigation - Note: This should ideally be moved to a shared component in the future */}
             <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
