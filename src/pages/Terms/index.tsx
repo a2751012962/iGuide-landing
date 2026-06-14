@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Compass, ArrowLeft, Globe } from 'lucide-react';
 import Seo from '../../components/Seo';
+import { useLanguageSwitch } from '../../components/useLanguageSwitch';
 
-export default function Terms() {
-    const [lang, setLang] = useState<'zh' | 'en'>('zh');
+export default function Terms({ lang }: { lang: 'zh' | 'en' }) {
+    const navigate = useNavigate();
+    const switchTo = useLanguageSwitch(lang);
 
     const content = {
         en: {
@@ -107,18 +108,18 @@ export default function Terms() {
 
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-800 selection:bg-orange-100 selection:text-orange-900">
-            <Seo title={t.seo.title} description={t.seo.description} path="/terms" lang={lang} type="article" />
+            <Seo title={t.seo.title} description={t.seo.description} path="/terms" lang={lang} type="article" breadcrumbLabel={t.title} />
             {/* Simple Navigation */}
             <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
-                        <Link to="/about" className="flex items-center gap-2 group">
+                        <Link to={`/${lang}/about`} className="flex items-center gap-2 group">
                             <ArrowLeft className="w-5 h-5 text-slate-400 group-hover:text-[#E84A27] transition-colors" />
                             <span className="text-sm font-medium text-slate-600 group-hover:text-[#E84A27] transition-colors">{t.nav.back}</span>
                         </Link>
                         <div className="flex items-center gap-6">
                             <button
-                                onClick={() => setLang(lang === 'zh' ? 'en' : 'zh')}
+                                onClick={() => navigate(switchTo)}
                                 className="flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-[#E84A27] transition-colors px-2 py-1.5 rounded-md hover:bg-orange-50"
                             >
                                 <Globe className="w-4 h-4" />

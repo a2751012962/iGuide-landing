@@ -1,25 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://iguide.chat/about</loc>
+    <loc>https://iguide.chat/en/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iguide.chat/en/about"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://iguide.chat/zh/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iguide.chat/en/about"/>
     <lastmod>2026-06-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://iguide.chat/featureA</loc>
+    <loc>https://iguide.chat/zh/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iguide.chat/en/about"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://iguide.chat/zh/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iguide.chat/en/about"/>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://iguide.chat/en/featureA</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iguide.chat/en/featureA"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://iguide.chat/zh/featureA"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iguide.chat/en/featureA"/>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iguide.chat/featureB</loc>
+    <loc>https://iguide.chat/zh/featureA</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iguide.chat/en/featureA"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://iguide.chat/zh/featureA"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iguide.chat/en/featureA"/>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://iguide.chat/terms</loc>
+    <loc>https://iguide.chat/en/featureB</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iguide.chat/en/featureB"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://iguide.chat/zh/featureB"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iguide.chat/en/featureB"/>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iguide.chat/zh/featureB</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iguide.chat/en/featureB"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://iguide.chat/zh/featureB"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iguide.chat/en/featureB"/>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iguide.chat/en/terms</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iguide.chat/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://iguide.chat/zh/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iguide.chat/en/terms"/>
+    <lastmod>2026-06-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://iguide.chat/zh/terms</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iguide.chat/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://iguide.chat/zh/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iguide.chat/en/terms"/>
     <lastmod>2026-06-14</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

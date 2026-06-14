@@ -1,14 +1,8 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
+import { ViteReactSSG } from 'vite-react-ssg';
+import { routes } from './App';
 import './index.css';
 
-import { BrowserRouter } from 'react-router-dom';
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </StrictMode>,
-);
+// vite-react-ssg entry: builds a data router from `routes`, hydrates on the
+// client and renders static HTML for every route at build time. The build
+// step (`vite-react-ssg build`) imports the named `createRoot` export below.
+export const createRoot = ViteReactSSG({ routes });

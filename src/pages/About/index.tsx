@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import { motion } from 'motion/react';
+import { LazyMotion, domAnimation, m } from 'motion/react';
 import { Home, MessageSquare, Compass, ArrowRight, CheckCircle2, Users, Star, Shield, Globe } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Seo from '../../components/Seo';
+import { useLanguageSwitch } from '../../components/useLanguageSwitch';
 
-export default function About() {
-    const [lang, setLang] = useState<'zh' | 'en'>('zh');
+export default function About({ lang }: { lang: 'zh' | 'en' }) {
+    const navigate = useNavigate();
+    const switchTo = useLanguageSwitch(lang);
 
     const content = {
         zh: {
@@ -129,8 +130,9 @@ export default function About() {
     const t = content[lang];
 
     return (
+        <LazyMotion features={domAnimation}>
         <div className="min-h-screen bg-slate-50 font-sans text-slate-800 selection:bg-orange-100 selection:text-orange-900">
-            <Seo title={t.seo.title} description={t.seo.description} path="/about" lang={lang} />
+            <Seo title={t.seo.title} description={t.seo.description} path="/about" lang={lang} breadcrumbLabel={t.nav.about} />
             {/* Navigation - Note: This should ideally be moved to a shared component in the future */}
             <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -142,13 +144,13 @@ export default function About() {
                             <span className="text-xl font-bold tracking-tight text-[#13294B]">iGuide</span>
                         </div>
                         <div className="hidden md:flex items-center gap-8">
-                            <Link to="/about" className="text-sm font-medium text-[#E84A27] transition-colors">{t.nav.about}</Link>
-                            <Link to="/featureA" className="text-sm font-medium text-slate-600 hover:text-[#E84A27] transition-colors">{t.nav.featureA}</Link>
-                            <Link to="/featureB" className="text-sm font-medium text-slate-600 hover:text-[#E84A27] transition-colors">{t.nav.featureB}</Link>
+                            <Link to={`/${lang}/about`} className="text-sm font-medium text-[#E84A27] transition-colors">{t.nav.about}</Link>
+                            <Link to={`/${lang}/featureA`} className="text-sm font-medium text-slate-600 hover:text-[#E84A27] transition-colors">{t.nav.featureA}</Link>
+                            <Link to={`/${lang}/featureB`} className="text-sm font-medium text-slate-600 hover:text-[#E84A27] transition-colors">{t.nav.featureB}</Link>
                         </div>
                         <div className="flex items-center gap-3 sm:gap-4">
                             <button
-                                onClick={() => setLang(lang === 'zh' ? 'en' : 'zh')}
+                                onClick={() => navigate(switchTo)}
                                 className="flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-[#E84A27] transition-colors px-2 py-1.5 rounded-md hover:bg-orange-50"
                             >
                                 <Globe className="w-4 h-4" />
@@ -165,7 +167,7 @@ export default function About() {
 
             {/* Hero Section */}
             <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
@@ -187,12 +189,12 @@ export default function About() {
                     <p className="text-lg sm:text-xl text-slate-500 mb-12 leading-relaxed max-w-2xl mx-auto">
                         {t.hero.desc}
                     </p>
-                </motion.div>
+                </m.div>
 
                 {/* The Gateway Cards */}
                 <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto text-left">
                     {/* Card A: Dorm Viewer */}
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
@@ -232,10 +234,10 @@ export default function About() {
                                 </div>
                             </div>
                         </a>
-                    </motion.div>
+                    </m.div>
 
                     {/* Card B: AI Chatbot */}
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.3 }}
@@ -275,7 +277,7 @@ export default function About() {
                                 </div>
                             </div>
                         </a>
-                    </motion.div>
+                    </m.div>
                 </div>
             </section>
 
@@ -344,13 +346,14 @@ export default function About() {
                         {t.footer.copyright}
                     </p>
                     <div className="flex flex-wrap justify-center gap-4 text-xs font-medium text-slate-500">
-                        <Link to="/terms" className="hover:text-[#E84A27] transition-colors">{t.footer.terms}</Link>
-                        <Link to="/terms" className="hover:text-[#E84A27] transition-colors">{t.footer.privacy}</Link>
-                        <Link to="/terms" className="hover:text-[#E84A27] transition-colors">{t.footer.disclaimer}</Link>
+                        <Link to={`/${lang}/terms`} className="hover:text-[#E84A27] transition-colors">{t.footer.terms}</Link>
+                        <Link to={`/${lang}/terms`} className="hover:text-[#E84A27] transition-colors">{t.footer.privacy}</Link>
+                        <Link to={`/${lang}/terms`} className="hover:text-[#E84A27] transition-colors">{t.footer.disclaimer}</Link>
                         <a href="mailto:support@iguide.chat" className="hover:text-[#E84A27] transition-colors">{t.footer.contact}</a>
                     </div>
                 </div>
             </footer>
         </div>
+        </LazyMotion>
     );
 }

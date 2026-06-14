@@ -11,12 +11,16 @@
 <a id="english"></a>
 ## English
 
-This repository contains the landing pages for iGuide, built with React, Vite, and React Router. It is designed as a Multi-Page Application (MPA) mimicking a Single Page Application (SPA) structure for shared components and ease of deployment.
+This repository contains the landing pages for iGuide, built with React, Vite, and React Router. Pages are **prerendered to static HTML at build time** with [`vite-react-ssg`](https://github.com/Daydreamer-riri/vite-react-ssg) so they are fully indexable by search engines, and each page is served at a **per-language URL** (`/en/...` and `/zh/...`) for international SEO. See [SEO.md](./SEO.md) for details.
 
 ### Current Pages (Routes)
-*   `/about` - The main About page (iguide.chat/about)
-*   `/featureA` - Feature A placeholder
-*   `/featureB` - Feature B placeholder
+Each page exists in English (`/en/...`) and Simplified Chinese (`/zh/...`):
+*   `/en/about`, `/zh/about` - The main About page (default landing)
+*   `/en/featureA`, `/zh/featureA` - Feature A placeholder
+*   `/en/featureB`, `/zh/featureB` - Feature B placeholder
+*   `/en/terms`, `/zh/terms` - Terms of Service & legal
+
+`/`, `/en`, `/zh`, and legacy unprefixed paths redirect to the appropriate English page.
 
 ### Run Locally
 

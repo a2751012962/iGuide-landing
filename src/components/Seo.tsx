@@ -1,11 +1,13 @@
-import { useEffect } from 'react';
+import { Head } from 'vite-react-ssg';
 
 /**
- * Site-wide SEO constants. `SITE_URL` is the canonical production domain
- * (used for canonical links, og:url, and absolute image URLs).
+ * Canonical production domain — used for canonical links, hreflang, og:url and
+ * absolute image URLs.
  */
 const SITE_URL = 'https://iguide.chat';
 const SITE_NAME = 'iGuide';
+// Real hosted 1200x475 banner. Replace with a self-hosted 1200x630 og-image
+// on iguide.chat when one is available.
 const DEFAULT_IMAGE =
     'https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6';
 
@@ -14,75 +16,82 @@ interface SeoProps {
     title: string;
     /** Meta description, ~150-160 chars for best display in search results. */
     description: string;
-    /** Route path beginning with "/", e.g. "/about". Used for the canonical URL. */
+    /** Route path WITHOUT the language prefix, e.g. "/about". */
     path: string;
-    /** Active UI language; drives <html lang> and og:locale. */
-    lang?: 'zh' | 'en';
+    /** Active language. Drives canonical, <html lang> and og:locale. */
+    lang: 'zh' | 'en';
     /** Absolute URL of the social-share image. */
     image?: string;
     /** Open Graph type, e.g. "website" or "article". */
     type?: string;
-}
-
-function upsertMeta(attr: 'name' | 'property', key: string, content: string) {
-    let el = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`);
-    if (!el) {
-        el = document.createElement('meta');
-        el.setAttribute(attr, key);
-        document.head.appendChild(el);
-    }
-    el.setAttribute('content', content);
-}
-
-function upsertLink(rel: string, href: string) {
-    let el = document.head.querySelector<HTMLLinkElement>(`link[rel="${rel}"]`);
-    if (!el) {
-        el = document.createElement('link');
-        el.setAttribute('rel', rel);
-        document.head.appendChild(el);
-    }
-    el.setAttribute('href', href);
+    /** Optional breadcrumb leaf label; emits a BreadcrumbList JSON-LD (Home → label). */
+    breadcrumbLabel?: string;
 }
 
 /**
- * Keeps document <head> metadata in sync with the current route and language.
- * Renders nothing. Because this is a client-rendered SPA, every page should
- * mount a <Seo /> so titles, descriptions, and canonical URLs update on
- * navigation rather than staying frozen at the index.html defaults.
+ * Emits per-page <head> metadata into the prerendered HTML via vite-react-ssg's
+ * SSR-safe <Head> (react-helmet-async). Renders separate-URL hreflang
+ * annotations so Google serves the right language version to each user.
  */
 export default function Seo({
     title,
     description,
     path,
-    lang = 'zh',
+    lang,
     image = DEFAULT_IMAGE,
     type = 'website',
+    breadcrumbLabel,
 }: SeoProps) {
-    useEffect(() => {
-        const url = `${SITE_URL}${path}`;
-        const fullTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
+    const enUrl = `${SITE_URL}/en${path}`;
+    const zhUrl = `${SITE_URL}/zh${path}`;
+    const canonical = lang === 'zh' ? zhUrl : enUrl;
+    const htmlLang = lang === 'zh' ? 'zh-Hans' : 'en';
+    const ogLocale = lang === 'zh' ? 'zh_CN' : 'en_US';
+    const ogLocaleAlt = lang === 'zh' ? 'en_US' : 'zh_CN';
+    const fullTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
 
-        document.title = fullTitle;
-        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    const breadcrumbJsonLd = breadcrumbLabel
+        ? {
+              '@context': 'https://schema.org',
+              '@type': 'BreadcrumbList',
+              itemListElement: [
+                  { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/${lang}/about` },
+                  { '@type': 'ListItem', position: 2, name: breadcrumbLabel, item: canonical },
+              ],
+          }
+        : null;
 
-        upsertMeta('name', 'description', description);
-        upsertLink('canonical', url);
+    return (
+        <Head>
+            <html lang={htmlLang} />
+            <title>{fullTitle}</title>
+            <meta name="description" content={description} />
+            <link rel="canonical" href={canonical} />
 
-        // Open Graph
-        upsertMeta('property', 'og:title', fullTitle);
-        upsertMeta('property', 'og:description', description);
-        upsertMeta('property', 'og:url', url);
-        upsertMeta('property', 'og:image', image);
-        upsertMeta('property', 'og:type', type);
-        upsertMeta('property', 'og:site_name', SITE_NAME);
-        upsertMeta('property', 'og:locale', lang === 'zh' ? 'zh_CN' : 'en_US');
+            {/* hreflang: reciprocal, self-referential, absolute URLs */}
+            <link rel="alternate" hrefLang="en" href={enUrl} />
+            <link rel="alternate" hrefLang="zh-Hans" href={zhUrl} />
+            <link rel="alternate" hrefLang="x-default" href={enUrl} />
 
-        // Twitter
-        upsertMeta('name', 'twitter:card', 'summary_large_image');
-        upsertMeta('name', 'twitter:title', fullTitle);
-        upsertMeta('name', 'twitter:description', description);
-        upsertMeta('name', 'twitter:image', image);
-    }, [title, description, path, lang, image, type]);
+            {/* Open Graph */}
+            <meta property="og:type" content={type} />
+            <meta property="og:site_name" content={SITE_NAME} />
+            <meta property="og:title" content={fullTitle} />
+            <meta property="og:description" content={description} />
+            <meta property="og:url" content={canonical} />
+            <meta property="og:image" content={image} />
+            <meta property="og:locale" content={ogLocale} />
+            <meta property="og:locale:alternate" content={ogLocaleAlt} />
 
-    return null;
+            {/* Twitter */}
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={fullTitle} />
+            <meta name="twitter:description" content={description} />
+            <meta name="twitter:image" content={image} />
+
+            {breadcrumbJsonLd && (
+                <script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>
+            )}
+        </Head>
+    );
 }

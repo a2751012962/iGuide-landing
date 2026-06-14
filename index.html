@@ -4,50 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Primary Meta Tags -->
-    <title>iGuide — UIUC Dorm Viewer & AI Campus Assistant</title>
-    <meta
-      name="description"
-      content="iGuide is the ultimate campus toolkit for UIUC students. Compare dorms with real student reviews and get 24/7 answers on courses, professors, and campus life from a bilingual AI assistant."
-    />
-    <meta
-      name="keywords"
-      content="UIUC, University of Illinois, dorm viewer, UIUC housing, campus assistant, AI chatbot, Illini, course advice, student tools, iGuide"
-    />
+    <!-- Per-page <title>, description, robots, canonical, hreflang and OG/Twitter
+         tags are injected per route by the <Seo> component (src/components/Seo.tsx)
+         and the redirect routes. Only site-wide defaults live here; no static
+         <title> so it doesn't duplicate the per-page helmet title. -->
     <meta name="author" content="iGuide Project" />
-    <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#E84A27" />
-
-    <!-- Canonical -->
-    <link rel="canonical" href="https://iguide.chat/about" />
 
     <!-- Icons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="iGuide" />
-    <meta property="og:url" content="https://iguide.chat/about" />
-    <meta property="og:title" content="iGuide — UIUC Dorm Viewer & AI Campus Assistant" />
-    <meta
-      property="og:description"
-      content="The ultimate campus toolkit for UIUC students: compare dorms with real reviews and get 24/7 answers from a bilingual AI assistant."
-    />
-    <meta property="og:image" content="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:locale:alternate" content="zh_CN" />
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="iGuide — UIUC Dorm Viewer & AI Campus Assistant" />
-    <meta
-      name="twitter:description"
-      content="The ultimate campus toolkit for UIUC students: compare dorms with real reviews and get 24/7 answers from a bilingual AI assistant."
-    />
-    <meta name="twitter:image" content="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-
-    <!-- Structured Data -->
+    <!-- Site-wide structured data -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -55,9 +23,15 @@
         "name": "iGuide",
         "url": "https://iguide.chat",
         "logo": "https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6",
-        "description": "The ultimate campus toolkit for UIUC students, featuring a Dorm Viewer and a 24/7 bilingual AI campus assistant.",
+        "description": "An independent, student-built campus toolkit for UIUC students, featuring a Dorm Viewer and a 24/7 bilingual AI campus assistant. Not affiliated with the University of Illinois Urbana-Champaign.",
         "email": "support@iguide.chat",
-        "areaServed": "University of Illinois Urbana-Champaign"
+        "areaServed": "University of Illinois Urbana-Champaign",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "email": "support@iguide.chat",
+          "contactType": "customer support",
+          "availableLanguage": ["en", "zh-Hans"]
+        }
       }
     </script>
     <script type="application/ld+json">
@@ -66,7 +40,23 @@
         "@type": "WebSite",
         "name": "iGuide",
         "url": "https://iguide.chat",
-        "inLanguage": ["en", "zh-CN"]
+        "inLanguage": ["en", "zh-Hans"]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "iGuide AI Chatbot",
+        "url": "https://iguide.chat/en/about",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web",
+        "description": "A 24/7 bilingual AI assistant for UIUC students covering courses, professor ratings, campus life, food and transit.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       }
     </script>
   </head>
