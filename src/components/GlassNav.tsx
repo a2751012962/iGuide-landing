@@ -60,7 +60,10 @@ export default function GlassNav({
                     </div>
                     <div className="flex items-center gap-2 sm:gap-3">
                         <button
-                            onClick={() => navigate(switchTo)}
+                            onClick={() => {
+                                setOpen(false);
+                                navigate(switchTo);
+                            }}
                             className="flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-[#E84A27] transition-colors px-2.5 py-1.5 rounded-full hover:bg-white/40"
                         >
                             <Globe className="w-4 h-4" />
@@ -72,7 +75,7 @@ export default function GlassNav({
                         </button>
                         <button
                             onClick={() => setOpen((v) => !v)}
-                            aria-label="Menu"
+                            aria-label={lang === 'zh' ? '菜单' : 'Menu'}
                             aria-expanded={open}
                             className="md:hidden flex items-center justify-center w-9 h-9 rounded-full text-[#13294B] hover:bg-white/40 transition-colors"
                         >
