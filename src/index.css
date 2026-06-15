@@ -87,7 +87,8 @@
   inset: 0;
   z-index: 60; /* above the nav (z-50) so the sheen passes over everything */
   pointer-events: none;
-  will-change: transform;
+  /* No will-change here: motion adds/removes it around the sweep, so the layer
+     isn't left parked on the compositor after the element settles off-screen. */
   background: linear-gradient(
     105deg,
     transparent 38%,

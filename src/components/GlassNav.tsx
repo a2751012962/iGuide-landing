@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LazyMotion, domAnimation, m, AnimatePresence, useReducedMotion } from 'motion/react';
+import { m, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Compass, Globe, Menu, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLanguageSwitch } from './useLanguageSwitch';
@@ -46,7 +46,6 @@ export default function GlassNav({
     ] as const;
 
     return (
-        <LazyMotion features={domAnimation}>
         <nav className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
             <div className="glass-surface-lg bg-white/60 border border-white/60 shadow-glass max-w-7xl mx-auto rounded-2xl px-4 sm:px-6">
                 <div className="flex justify-between items-center h-14">
@@ -123,6 +122,5 @@ export default function GlassNav({
                 </AnimatePresence>
             </div>
         </nav>
-        </LazyMotion>
     );
 }
