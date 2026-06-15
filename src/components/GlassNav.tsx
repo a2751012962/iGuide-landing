@@ -1,4 +1,5 @@
-import { Compass, Globe } from 'lucide-react';
+import { useState } from 'react';
+import { Compass, Globe, Menu, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLanguageSwitch } from './useLanguageSwitch';
 
@@ -13,7 +14,8 @@ type NavLabels = {
 
 /**
  * Floating Liquid-Glass navigation shared by the main pages. `active` controls
- * which link is highlighted; language + auth actions live on the right.
+ * which link is highlighted; language + auth actions live on the right. On
+ * small screens the primary links collapse into a glass dropdown menu.
  */
 export default function GlassNav({
     lang,
@@ -26,6 +28,7 @@ export default function GlassNav({
 }) {
     const navigate = useNavigate();
     const switchTo = useLanguageSwitch(lang);
+    const [open, setOpen] = useState(false);
 
     const linkClass = (key: typeof active) =>
         `text-sm font-medium transition-colors ${
@@ -34,20 +37,26 @@ export default function GlassNav({
                 : 'text-slate-600 hover:text-[#E84A27]'
         }`;
 
+    const links = [
+        { key: 'about', label: labels.about },
+        { key: 'featureA', label: labels.featureA },
+        { key: 'featureB', label: labels.featureB },
+    ] as const;
+
     return (
         <nav className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
             <div className="glass-surface-lg bg-white/60 border border-white/60 shadow-glass max-w-7xl mx-auto rounded-2xl px-4 sm:px-6">
                 <div className="flex justify-between items-center h-14">
-                    <Link to={`/${lang}/about`} className="flex items-center gap-2">
+                    <Link to={`/${lang}/about`} onClick={() => setOpen(false)} className="flex items-center gap-2">
                         <div className="w-8 h-8 bg-[#E84A27] rounded-xl flex items-center justify-center text-white shadow-sm">
                             <Compass className="w-5 h-5" />
                         </div>
                         <span className="text-xl font-bold tracking-tight text-[#13294B]">iGuide</span>
                     </Link>
                     <div className="hidden md:flex items-center gap-8">
-                        <Link to={`/${lang}/about`} className={linkClass('about')}>{labels.about}</Link>
-                        <Link to={`/${lang}/featureA`} className={linkClass('featureA')}>{labels.featureA}</Link>
-                        <Link to={`/${lang}/featureB`} className={linkClass('featureB')}>{labels.featureB}</Link>
+                        {links.map(({ key, label }) => (
+                            <Link key={key} to={`/${lang}/${key}`} className={linkClass(key)}>{label}</Link>
+                        ))}
                     </div>
                     <div className="flex items-center gap-2 sm:gap-3">
                         <button
@@ -58,11 +67,43 @@ export default function GlassNav({
                             {labels.lang}
                         </button>
                         <button className="text-sm font-medium text-slate-600 hover:text-[#13294B] transition-colors hidden sm:block">{labels.login}</button>
-                        <button className="glass-btn text-white bg-[#13294B]/90 border-white/15 px-4 py-2 rounded-full text-sm font-medium">
+                        <button className="glass-btn text-white bg-[#13294B]/90 border-white/15 px-4 py-2 rounded-full text-sm font-medium hidden sm:block">
                             {labels.signup}
+                        </button>
+                        <button
+                            onClick={() => setOpen((v) => !v)}
+                            aria-label="Menu"
+                            aria-expanded={open}
+                            className="md:hidden flex items-center justify-center w-9 h-9 rounded-full text-[#13294B] hover:bg-white/40 transition-colors"
+                        >
+                            {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                         </button>
                     </div>
                 </div>
+
+                {/* Mobile dropdown */}
+                {open && (
+                    <div className="md:hidden border-t border-white/50 py-3 flex flex-col gap-1">
+                        {links.map(({ key, label }) => (
+                            <Link
+                                key={key}
+                                to={`/${lang}/${key}`}
+                                onClick={() => setOpen(false)}
+                                className={`px-3 py-2 rounded-xl hover:bg-white/40 ${linkClass(key)}`}
+                            >
+                                {label}
+                            </Link>
+                        ))}
+                        <div className="mt-2 flex gap-2 px-1">
+                            <button className="flex-1 text-sm font-medium text-[#13294B] glass-surface-sm bg-white/50 border border-white/60 px-4 py-2 rounded-full">
+                                {labels.login}
+                            </button>
+                            <button className="flex-1 glass-btn text-white bg-[#13294B]/90 border-white/15 px-4 py-2 rounded-full text-sm font-medium">
+                                {labels.signup}
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
         </nav>
     );

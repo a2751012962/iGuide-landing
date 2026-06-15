@@ -1,10 +1,7 @@
-import { useRef } from 'react';
 import { LazyMotion, domAnimation, m } from 'motion/react';
 import { Home, MessageSquare, Compass, ArrowRight, CheckCircle2, Users, Star, Shield } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { ClientOnly } from 'vite-react-ssg';
-import LiquidGlass from 'liquid-glass-react';
 import Seo from '../../components/Seo';
 import GlassBackground from '../../components/GlassBackground';
 import GlassNav from '../../components/GlassNav';
@@ -22,44 +19,34 @@ type GatewayCard = {
 };
 
 /**
- * Inner content of a gateway card. Rendered in two variants:
- *  - `glass`: white-on-dark, sits inside the liquid-glass-react surface
- *    (which forces white text and supplies its own translucent panel).
- *  - `light`: the static, prerendered/non-Chromium fallback on a plugin
- *    glass-card surface, using the site's navy/slate palette.
+ * Inner content of a gateway card, laid out on a responsive plugin
+ * `glass-card` surface (navy/slate palette over the frosted panel).
  */
-function CardInner({ card, variant }: { card: GatewayCard; variant: 'glass' | 'light' }) {
-    const dark = variant === 'glass';
+function CardInner({ card }: { card: GatewayCard }) {
     const Icon = card.icon;
     return (
         <div className="flex flex-col h-full w-full text-left">
             <div className="flex-grow">
                 <div
-                    className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110 ${
-                        dark ? 'bg-white/20 text-white' : `glass-surface-sm bg-white/50 border border-white/60 ${card.accentText}`
-                    }`}
+                    className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110 glass-surface-sm bg-white/50 border border-white/60 ${card.accentText}`}
                 >
                     <Icon className="w-7 h-7" />
                 </div>
-                <h2 className={`text-2xl font-bold mb-2 ${dark ? 'text-white' : 'text-[#13294B]'}`}>{card.title}</h2>
-                <p className={`mb-8 text-lg ${dark ? 'text-white/75' : 'text-slate-500'}`}>{card.subtitle}</p>
+                <h2 className="text-2xl font-bold mb-2 text-[#13294B]">{card.title}</h2>
+                <p className="mb-8 text-lg text-slate-500">{card.subtitle}</p>
                 <ul className="space-y-3 mb-10">
                     {card.features.map((feature, idx) => (
-                        <li key={idx} className={`flex items-center ${dark ? 'text-white/90' : 'text-slate-600'}`}>
-                            <CheckCircle2 className={`w-5 h-5 mr-3 shrink-0 ${dark ? 'text-emerald-300' : 'text-emerald-500'}`} />
+                        <li key={idx} className="flex items-center text-slate-600">
+                            <CheckCircle2 className="w-5 h-5 mr-3 shrink-0 text-emerald-500" />
                             <span>{feature}</span>
                         </li>
                     ))}
                 </ul>
             </div>
-            <div className={`mt-auto pt-6 border-t ${dark ? 'border-white/20' : 'border-white/50'}`}>
-                <div className={`flex items-center justify-between font-semibold ${dark ? 'text-white' : card.accentText}`}>
+            <div className="mt-auto pt-6 border-t border-white/50">
+                <div className={`flex items-center justify-between font-semibold ${card.accentText}`}>
                     <span>{card.action}</span>
-                    <div
-                        className={`w-10 h-10 rounded-full flex items-center justify-center group-hover:translate-x-1 transition-all ${
-                            dark ? 'bg-white/20' : 'glass-surface-sm bg-white/50 border border-white/60'
-                        }`}
-                    >
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover:translate-x-1 transition-all glass-surface-sm bg-white/50 border border-white/60">
                         <ArrowRight className="w-5 h-5" />
                     </div>
                 </div>
@@ -69,8 +56,6 @@ function CardInner({ card, variant }: { card: GatewayCard; variant: 'glass' | 'l
 }
 
 export default function About({ lang }: { lang: 'zh' | 'en' }) {
-    const gridRef = useRef<HTMLDivElement>(null);
-
     const content = {
         zh: {
             seo: {
@@ -250,10 +235,8 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                     </p>
                 </m.div>
 
-                {/* The Gateway Cards — genuine liquid-glass refraction (Chromium),
-                    with a static plugin glass-card fallback for prerender / Safari /
-                    Firefox / reduced-transparency. */}
-                <div ref={gridRef} className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto text-left">
+                {/* The Gateway Cards — responsive frosted glass-card surfaces. */}
+                <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto text-left">
                     {cards.map((card) => (
                         <m.div
                             key={card.key}
@@ -268,29 +251,9 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                                 rel="noopener noreferrer"
                                 className="group block h-full"
                             >
-                                <ClientOnly
-                                    fallback={
-                                        <div className="glass-card glass-shine bg-white/60 border-white/60 rounded-3xl p-8 sm:p-10 h-full shadow-glass transition-transform duration-300 group-hover:-translate-y-1.5">
-                                            <CardInner card={card} variant="light" />
-                                        </div>
-                                    }
-                                >
-                                    {() => (
-                                        <LiquidGlass
-                                            cornerRadius={28}
-                                            padding="36px"
-                                            overLight
-                                            elasticity={0.18}
-                                            blurAmount={0.08}
-                                            saturation={150}
-                                            mouseContainer={gridRef}
-                                            className="lg-fill h-full w-full transition-transform duration-300 group-hover:-translate-y-1.5"
-                                            style={{ height: '100%' }}
-                                        >
-                                            <CardInner card={card} variant="glass" />
-                                        </LiquidGlass>
-                                    )}
-                                </ClientOnly>
+                                <div className="glass-card glass-shine bg-white/60 border-white/60 rounded-3xl p-8 sm:p-10 h-full shadow-glass transition-transform duration-300 group-hover:-translate-y-1.5">
+                                    <CardInner card={card} />
+                                </div>
                             </a>
                         </m.div>
                     ))}
