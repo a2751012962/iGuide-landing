@@ -1,7 +1,207 @@
 @import "tailwindcss";
 
-/* Respect users who prefer reduced motion: neutralize animations/transitions
-   (helps avoid motion-triggered discomfort and reduces INP work). */
+/* ------------------------------------------------------------------ *
+ *  iGuide — Apple "Liquid Glass" design system
+ *  ----------------------------------------------------------------
+ *  A light, dimensional aesthetic: a soft colour-mesh wallpaper sits
+ *  behind frosted, translucent panels. Panels carry a specular top
+ *  edge + inner highlight so they read like real glass refracting the
+ *  colour behind them. Brand colours (Illini orange / navy) drive the
+ *  ambient orbs and accents.
+ * ------------------------------------------------------------------ */
+
+@theme {
+  --color-brand-orange: #e84a27;
+  --color-brand-navy: #13294b;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+    system-ui, "Helvetica Neue", Arial, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Ambient wallpaper + floating colour orbs
+ * ------------------------------------------------------------------ */
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 120% at 100% 0%, #fdf2ee 0%, transparent 45%),
+    radial-gradient(120% 120% at 0% 100%, #eef2fb 0%, transparent 50%),
+    linear-gradient(180deg, #fbfafc 0%, #f1f3fa 55%, #eaeef7 100%);
+}
+
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  will-change: transform;
+}
+
+.orb-1 {
+  top: -8rem;
+  right: -6rem;
+  width: 32rem;
+  height: 32rem;
+  background: radial-gradient(circle at 30% 30%, rgba(232, 74, 39, 0.45), rgba(232, 74, 39, 0) 70%);
+  animation: orb-float-a 22s ease-in-out infinite;
+}
+
+.orb-2 {
+  top: 18rem;
+  left: -10rem;
+  width: 34rem;
+  height: 34rem;
+  background: radial-gradient(circle at 30% 30%, rgba(19, 41, 75, 0.32), rgba(19, 41, 75, 0) 70%);
+  animation: orb-float-b 26s ease-in-out infinite;
+}
+
+.orb-3 {
+  bottom: -10rem;
+  right: 10%;
+  width: 28rem;
+  height: 28rem;
+  background: radial-gradient(circle at 30% 30%, rgba(124, 92, 255, 0.28), rgba(124, 92, 255, 0) 70%);
+  animation: orb-float-a 30s ease-in-out infinite reverse;
+}
+
+.orb-4 {
+  top: 4rem;
+  left: 38%;
+  width: 22rem;
+  height: 22rem;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 176, 87, 0.28), rgba(255, 176, 87, 0) 70%);
+  animation: orb-float-b 24s ease-in-out infinite;
+}
+
+@keyframes orb-float-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-3rem, 2.5rem, 0) scale(1.12); }
+}
+
+@keyframes orb-float-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(3rem, -2rem, 0) scale(1.08); }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Glass surfaces
+ * ------------------------------------------------------------------ */
+
+/* Base frosted panel */
+.glass {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 10px 30px -8px rgba(19, 41, 75, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(19, 41, 75, 0.04);
+}
+
+/* Denser panel for content-heavy areas (legal, terms, stats) */
+.glass-strong {
+  background: rgba(255, 255, 255, 0.66);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 16px 40px -12px rgba(19, 41, 75, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 0 rgba(19, 41, 75, 0.04);
+}
+
+/* Floating navigation bar */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 8px 28px -8px rgba(19, 41, 75, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+/* Small translucent chip (badges / icon tiles) */
+.glass-chip {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* Specular sweep that rides across glass cards on hover */
+.glass-card {
+  position: relative;
+  overflow: hidden;
+}
+.glass-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.45) 48%,
+    transparent 66%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.glass-card:hover::after {
+  transform: translateX(120%);
+}
+
+/* Primary tinted-glass button (navy) */
+.glass-cta {
+  background: linear-gradient(135deg, rgba(19, 41, 75, 0.92), rgba(19, 41, 75, 0.78));
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 8px 20px -6px rgba(19, 41, 75, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.glass-cta:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 12px 26px -6px rgba(19, 41, 75, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Accent tinted-glass button (orange) */
+.glass-cta-orange {
+  background: linear-gradient(135deg, rgba(232, 74, 39, 0.95), rgba(255, 122, 71, 0.82));
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow:
+    0 8px 20px -6px rgba(232, 74, 39, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.glass-cta-orange:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 12px 26px -6px rgba(232, 74, 39, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* ------------------------------------------------------------------ *
+ *  Respect users who prefer reduced motion: neutralize animations and
+ *  transitions (avoids motion-triggered discomfort, reduces INP work).
+ * ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -1,12 +1,11 @@
 import { LazyMotion, domAnimation, m } from 'motion/react';
-import { Home, MessageSquare, Compass, ArrowRight, CheckCircle2, Users, Star, Shield, Globe } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Home, MessageSquare, Compass, ArrowRight, CheckCircle2, Users, Star, Shield } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Seo from '../../components/Seo';
-import { useLanguageSwitch } from '../../components/useLanguageSwitch';
+import GlassBackground from '../../components/GlassBackground';
+import GlassNav from '../../components/GlassNav';
 
 export default function About({ lang }: { lang: 'zh' | 'en' }) {
-    const navigate = useNavigate();
-    const switchTo = useLanguageSwitch(lang);
 
     const content = {
         zh: {
@@ -131,39 +130,10 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
 
     return (
         <LazyMotion features={domAnimation}>
-        <div className="min-h-screen bg-slate-50 font-sans text-slate-800 selection:bg-orange-100 selection:text-orange-900">
+        <div className="min-h-screen font-sans text-slate-800 selection:bg-orange-100 selection:text-orange-900">
             <Seo title={t.seo.title} description={t.seo.description} path="/about" lang={lang} breadcrumbLabel={t.nav.about} />
-            {/* Navigation - Note: This should ideally be moved to a shared component in the future */}
-            <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center h-16">
-                        <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-[#E84A27] rounded-lg flex items-center justify-center text-white shadow-sm">
-                                <Compass className="w-5 h-5" />
-                            </div>
-                            <span className="text-xl font-bold tracking-tight text-[#13294B]">iGuide</span>
-                        </div>
-                        <div className="hidden md:flex items-center gap-8">
-                            <Link to={`/${lang}/about`} className="text-sm font-medium text-[#E84A27] transition-colors">{t.nav.about}</Link>
-                            <Link to={`/${lang}/featureA`} className="text-sm font-medium text-slate-600 hover:text-[#E84A27] transition-colors">{t.nav.featureA}</Link>
-                            <Link to={`/${lang}/featureB`} className="text-sm font-medium text-slate-600 hover:text-[#E84A27] transition-colors">{t.nav.featureB}</Link>
-                        </div>
-                        <div className="flex items-center gap-3 sm:gap-4">
-                            <button
-                                onClick={() => navigate(switchTo)}
-                                className="flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-[#E84A27] transition-colors px-2 py-1.5 rounded-md hover:bg-orange-50"
-                            >
-                                <Globe className="w-4 h-4" />
-                                {t.nav.lang}
-                            </button>
-                            <button className="text-sm font-medium text-slate-600 hover:text-[#13294B] transition-colors hidden sm:block">{t.nav.login}</button>
-                            <button className="bg-[#13294B] text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-slate-800 transition-colors">
-                                {t.nav.signup}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </nav>
+            <GlassBackground />
+            <GlassNav lang={lang} labels={t.nav} active="about" />
 
             {/* Hero Section */}
             <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
@@ -173,7 +143,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                     transition={{ duration: 0.6 }}
                     className="max-w-3xl mx-auto"
                 >
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-100/50 text-[#E84A27] text-sm font-medium mb-8 border border-orange-200/50">
+                    <div className="glass-chip inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[#E84A27] text-sm font-medium mb-8">
                         <span className="relative flex h-2 w-2">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E84A27] opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E84A27]"></span>
@@ -203,12 +173,12 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                             href="https://iguide.chat/dorms"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group flex flex-col h-full bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-slate-200 hover:shadow-xl hover:border-orange-200 transition-all duration-300 relative overflow-hidden"
+                            className="glass glass-card group flex flex-col h-full rounded-3xl p-8 sm:p-10 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_50px_-12px_rgba(232,74,39,0.28)]"
                         >
-                            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-orange-50 to-transparent rounded-bl-full -mr-10 -mt-10 transition-transform duration-500 group-hover:scale-110"></div>
+                            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-orange-200/40 to-transparent rounded-bl-full -mr-10 -mt-10 transition-transform duration-500 group-hover:scale-110"></div>
 
                             <div className="relative z-10 flex-grow">
-                                <div className="w-14 h-14 bg-orange-100 text-[#E84A27] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-inner">
+                                <div className="w-14 h-14 glass-chip text-[#E84A27] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                                     <Home className="w-7 h-7" />
                                 </div>
 
@@ -225,10 +195,10 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                                 </ul>
                             </div>
 
-                            <div className="relative z-10 mt-auto pt-6 border-t border-slate-100">
+                            <div className="relative z-10 mt-auto pt-6 border-t border-white/50">
                                 <div className="flex items-center justify-between text-[#E84A27] font-semibold group-hover:text-orange-600 transition-colors">
                                     <span>{t.cards.dorm.action}</span>
-                                    <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center group-hover:bg-orange-100 group-hover:translate-x-1 transition-all">
+                                    <div className="w-10 h-10 rounded-full glass-chip flex items-center justify-center group-hover:translate-x-1 transition-all">
                                         <ArrowRight className="w-5 h-5" />
                                     </div>
                                 </div>
@@ -246,12 +216,12 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                             href="https://iguide.chat/chat"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group flex flex-col h-full bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-slate-200 hover:shadow-xl hover:border-blue-200 transition-all duration-300 relative overflow-hidden"
+                            className="glass glass-card group flex flex-col h-full rounded-3xl p-8 sm:p-10 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_50px_-12px_rgba(19,41,75,0.28)]"
                         >
-                            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-blue-50 to-transparent rounded-bl-full -mr-10 -mt-10 transition-transform duration-500 group-hover:scale-110"></div>
+                            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-blue-200/40 to-transparent rounded-bl-full -mr-10 -mt-10 transition-transform duration-500 group-hover:scale-110"></div>
 
                             <div className="relative z-10 flex-grow">
-                                <div className="w-14 h-14 bg-blue-100 text-[#13294B] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-inner">
+                                <div className="w-14 h-14 glass-chip text-[#13294B] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300">
                                     <MessageSquare className="w-7 h-7" />
                                 </div>
 
@@ -268,10 +238,10 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                                 </ul>
                             </div>
 
-                            <div className="relative z-10 mt-auto pt-6 border-t border-slate-100">
+                            <div className="relative z-10 mt-auto pt-6 border-t border-white/50">
                                 <div className="flex items-center justify-between text-[#13294B] font-semibold group-hover:text-blue-800 transition-colors">
                                     <span>{t.cards.chat.action}</span>
-                                    <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 group-hover:translate-x-1 transition-all">
+                                    <div className="w-10 h-10 rounded-full glass-chip flex items-center justify-center group-hover:translate-x-1 transition-all">
                                         <ArrowRight className="w-5 h-5" />
                                     </div>
                                 </div>
@@ -282,26 +252,32 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
             </section>
 
             {/* Stats / Social Proof Section */}
-            <section className="py-16 bg-white border-y border-slate-200">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-100">
+            <section className="py-16 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-5xl mx-auto glass-strong rounded-3xl px-6 py-10 sm:px-10">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/50">
                         <div className="p-4">
                             <div className="flex justify-center mb-4">
-                                <Users className="w-8 h-8 text-slate-400" />
+                                <span className="glass-chip w-12 h-12 rounded-2xl flex items-center justify-center text-[#E84A27]">
+                                    <Users className="w-6 h-6" />
+                                </span>
                             </div>
                             <h3 className="text-3xl font-bold text-[#13294B] mb-2">2,000+</h3>
                             <p className="text-slate-500 font-medium">{t.stats.users}</p>
                         </div>
                         <div className="p-4 pt-8 md:pt-4">
                             <div className="flex justify-center mb-4">
-                                <Shield className="w-8 h-8 text-slate-400" />
+                                <span className="glass-chip w-12 h-12 rounded-2xl flex items-center justify-center text-[#13294B]">
+                                    <Shield className="w-6 h-6" />
+                                </span>
                             </div>
                             <h3 className="text-3xl font-bold text-[#13294B] mb-2">24</h3>
                             <p className="text-slate-500 font-medium">{t.stats.dorms}</p>
                         </div>
                         <div className="p-4 pt-8 md:pt-4">
                             <div className="flex justify-center mb-4">
-                                <Star className="w-8 h-8 text-slate-400" />
+                                <span className="glass-chip w-12 h-12 rounded-2xl flex items-center justify-center text-amber-500">
+                                    <Star className="w-6 h-6" />
+                                </span>
                             </div>
                             <h3 className="text-3xl font-bold text-[#13294B] mb-2">98%</h3>
                             <p className="text-slate-500 font-medium">{t.stats.satisfaction}</p>
@@ -311,8 +287,8 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
             </section>
 
             {/* Legal / Compliance Section */}
-            <section className="py-12 bg-slate-50 border-t border-slate-200">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <section className="py-8 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto glass rounded-3xl px-6 py-10 sm:px-10">
                     <h3 className="text-xl font-bold text-[#13294B] mb-8 text-center">{t.legal.title}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         <div>
@@ -336,13 +312,13 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
             </section>
 
             {/* Footer */}
-            <footer className="bg-white py-8 border-t border-slate-200">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <footer className="px-4 sm:px-6 lg:px-8 pb-6 pt-4">
+                <div className="max-w-7xl mx-auto glass-nav rounded-2xl px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-6">
                     <div className="flex items-center gap-2">
                         <Compass className="w-5 h-5 text-[#E84A27]" />
                         <span className="text-lg font-bold tracking-tight text-[#13294B]">iGuide</span>
                     </div>
-                    <p className="text-slate-400 text-xs text-center md:text-left">
+                    <p className="text-slate-500 text-xs text-center md:text-left">
                         {t.footer.copyright}
                     </p>
                     <div className="flex flex-wrap justify-center gap-4 text-xs font-medium text-slate-500">

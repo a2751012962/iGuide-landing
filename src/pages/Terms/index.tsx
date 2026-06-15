@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Compass, ArrowLeft, Globe } from 'lucide-react';
 import Seo from '../../components/Seo';
+import GlassBackground from '../../components/GlassBackground';
 import { useLanguageSwitch } from '../../components/useLanguageSwitch';
 
 export default function Terms({ lang }: { lang: 'zh' | 'en' }) {
@@ -107,12 +108,13 @@ export default function Terms({ lang }: { lang: 'zh' | 'en' }) {
     const t = content[lang];
 
     return (
-        <div className="min-h-screen bg-slate-50 font-sans text-slate-800 selection:bg-orange-100 selection:text-orange-900">
+        <div className="min-h-screen font-sans text-slate-800 selection:bg-orange-100 selection:text-orange-900">
             <Seo title={t.seo.title} description={t.seo.description} path="/terms" lang={lang} type="article" breadcrumbLabel={t.title} />
+            <GlassBackground />
             {/* Simple Navigation */}
-            <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
-                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center h-16">
+            <nav className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
+                <div className="glass-nav max-w-4xl mx-auto rounded-2xl px-4 sm:px-6">
+                    <div className="flex justify-between items-center h-14">
                         <Link to={`/${lang}/about`} className="flex items-center gap-2 group">
                             <ArrowLeft className="w-5 h-5 text-slate-400 group-hover:text-[#E84A27] transition-colors" />
                             <span className="text-sm font-medium text-slate-600 group-hover:text-[#E84A27] transition-colors">{t.nav.back}</span>
@@ -120,7 +122,7 @@ export default function Terms({ lang }: { lang: 'zh' | 'en' }) {
                         <div className="flex items-center gap-6">
                             <button
                                 onClick={() => navigate(switchTo)}
-                                className="flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-[#E84A27] transition-colors px-2 py-1.5 rounded-md hover:bg-orange-50"
+                                className="flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-[#E84A27] transition-colors px-2.5 py-1.5 rounded-full hover:bg-white/40"
                             >
                                 <Globe className="w-4 h-4" />
                                 {t.nav.lang}
@@ -136,9 +138,9 @@ export default function Terms({ lang }: { lang: 'zh' | 'en' }) {
 
             {/* Content Area */}
             <main className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-                <div className="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-slate-200 prose prose-slate max-w-none">
+                <div className="glass-strong rounded-3xl p-8 sm:p-12 prose prose-slate max-w-none">
                     <h1 className="text-3xl font-bold text-[#13294B] mb-2">{t.title}</h1>
-                    <p className="text-sm text-slate-500 mb-8 border-b border-slate-100 pb-8">{t.lastUpdated}</p>
+                    <p className="text-sm text-slate-500 mb-8 border-b border-white/50 pb-8">{t.lastUpdated}</p>
 
                     <p>{t.intro}</p>
 
@@ -159,10 +161,12 @@ export default function Terms({ lang }: { lang: 'zh' | 'en' }) {
             </main>
 
             {/* Simple Footer */}
-            <footer className="bg-slate-50 py-8 border-t border-slate-200 text-center">
-                <p className="text-slate-400 text-xs text-center">
-                    {t.footer}
-                </p>
+            <footer className="px-4 sm:px-6 lg:px-8 pb-6 pt-4">
+                <div className="max-w-4xl mx-auto glass-nav rounded-2xl py-5 text-center">
+                    <p className="text-slate-500 text-xs">
+                        {t.footer}
+                    </p>
+                </div>
             </footer>
         </div>
     );
