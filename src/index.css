@@ -78,6 +78,26 @@
   transform: scaleX(1);
 }
 
+/* Liquid-glass light sweep that passes across the viewport on each route
+   change (see Layout.tsx). A single transform-only layer with no
+   backdrop-filter, so it composites cheaply no matter how much glass is on
+   screen — the route content itself swaps instantly underneath. */
+.route-sweep {
+  position: fixed;
+  inset: 0;
+  z-index: 60; /* above the nav (z-50) so the sheen passes over everything */
+  pointer-events: none;
+  will-change: transform;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.28) 47%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(232, 74, 39, 0.12) 54%,
+    transparent 63%
+  );
+}
+
 /* ------------------------------------------------------------------ *
  *  Ambient wallpaper + floating colour orbs (decorative backdrop the
  *  frosted glass refracts — not a glass surface itself). The orbs live
