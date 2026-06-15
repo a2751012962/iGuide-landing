@@ -1,7 +1,96 @@
 @import "tailwindcss";
 
-/* Respect users who prefer reduced motion: neutralize animations/transitions
-   (helps avoid motion-triggered discomfort and reduces INP work). */
+/* Ready-made Apple "Liquid Glass" surfaces come from the liquidglass-tailwind
+   plugin (glass-card, glass-surface*, glass-btn, glass-shine, shadow-glass …).
+   Locally we only add the ambient colour wallpaper the glass refracts. */
+@plugin "liquidglass-tailwind";
+
+@theme {
+  --color-brand-orange: #e84a27;
+  --color-brand-navy: #13294b;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+    system-ui, "Helvetica Neue", Arial, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Ambient wallpaper + floating colour orbs (decorative backdrop the
+ *  frosted glass refracts — not a glass surface itself).
+ * ------------------------------------------------------------------ */
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 120% at 100% 0%, #fdf2ee 0%, transparent 45%),
+    radial-gradient(120% 120% at 0% 100%, #eef2fb 0%, transparent 50%),
+    linear-gradient(180deg, #fbfafc 0%, #f1f3fa 55%, #eaeef7 100%);
+}
+
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  will-change: transform;
+}
+
+.orb-1 {
+  top: -8rem;
+  right: -6rem;
+  width: 32rem;
+  height: 32rem;
+  background: radial-gradient(circle at 30% 30%, rgba(232, 74, 39, 0.45), rgba(232, 74, 39, 0) 70%);
+  animation: orb-float-a 22s ease-in-out infinite;
+}
+
+.orb-2 {
+  top: 18rem;
+  left: -10rem;
+  width: 34rem;
+  height: 34rem;
+  background: radial-gradient(circle at 30% 30%, rgba(19, 41, 75, 0.32), rgba(19, 41, 75, 0) 70%);
+  animation: orb-float-b 26s ease-in-out infinite;
+}
+
+.orb-3 {
+  bottom: -10rem;
+  right: 10%;
+  width: 28rem;
+  height: 28rem;
+  background: radial-gradient(circle at 30% 30%, rgba(124, 92, 255, 0.28), rgba(124, 92, 255, 0) 70%);
+  animation: orb-float-a 30s ease-in-out infinite reverse;
+}
+
+.orb-4 {
+  top: 4rem;
+  left: 38%;
+  width: 22rem;
+  height: 22rem;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 176, 87, 0.28), rgba(255, 176, 87, 0) 70%);
+  animation: orb-float-b 24s ease-in-out infinite;
+}
+
+@keyframes orb-float-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-3rem, 2.5rem, 0) scale(1.12); }
+}
+
+@keyframes orb-float-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(3rem, -2rem, 0) scale(1.08); }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Respect users who prefer reduced motion.
+ * ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
