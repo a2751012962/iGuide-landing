@@ -29,7 +29,7 @@ function CardInner({ card }: { card: GatewayCard }) {
         <div className="flex flex-col h-full w-full text-left">
             <div className="flex-grow">
                 <div
-                    className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110 glass-surface-sm bg-white/50 border border-white/60 ${card.accentText}`}
+                    className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 ease-[var(--ease-liquid)] group-hover:scale-110 glass-surface-sm bg-white/50 border border-white/60 ${card.accentText}`}
                 >
                     <Icon className="w-7 h-7" />
                 </div>
@@ -47,7 +47,7 @@ function CardInner({ card }: { card: GatewayCard }) {
             <div className="mt-auto pt-6 border-t border-white/50">
                 <div className={`flex items-center justify-between font-semibold ${card.accentText}`}>
                     <span>{card.action}</span>
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover:translate-x-1 transition-all glass-surface-sm bg-white/50 border border-white/60">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover:translate-x-1 transition-transform duration-300 ease-[var(--ease-liquid)] glass-surface-sm bg-white/50 border border-white/60">
                         <ArrowRight className="w-5 h-5" />
                     </div>
                 </div>
@@ -215,7 +215,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                 <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                     className="max-w-3xl mx-auto"
                 >
                     <div className="glass-surface-sm bg-white/50 border border-white/60 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[#E84A27] text-sm font-medium mb-8 shadow-glass">
@@ -243,7 +243,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                             key={card.key}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: card.delay }}
+                            transition={{ duration: 0.6, delay: card.delay, ease: [0.22, 1, 0.36, 1] }}
                             className="h-full"
                         >
                             <a
@@ -267,13 +267,13 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.6 }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                     className="max-w-5xl mx-auto glass-card-elevated glass-shine liquid-sheen overflow-hidden bg-white/65 border-white/70 rounded-3xl px-6 py-10 sm:px-10 shadow-glass-lg"
                 >
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/50">
                         <div className="p-4">
                             <div className="flex justify-center mb-4">
-                                <span className="glass-surface-sm bg-white/50 border border-white/60 w-12 h-12 rounded-2xl flex items-center justify-center text-[#E84A27]">
+                                <span className="interactive glass-surface-sm bg-white/50 border border-white/60 w-12 h-12 rounded-2xl flex items-center justify-center text-[#E84A27]">
                                     <Users className="w-6 h-6" />
                                 </span>
                             </div>
@@ -282,7 +282,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                         </div>
                         <div className="p-4 pt-8 md:pt-4">
                             <div className="flex justify-center mb-4">
-                                <span className="glass-surface-sm bg-white/50 border border-white/60 w-12 h-12 rounded-2xl flex items-center justify-center text-[#13294B]">
+                                <span className="interactive glass-surface-sm bg-white/50 border border-white/60 w-12 h-12 rounded-2xl flex items-center justify-center text-[#13294B]">
                                     <Shield className="w-6 h-6" />
                                 </span>
                             </div>
@@ -291,7 +291,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                         </div>
                         <div className="p-4 pt-8 md:pt-4">
                             <div className="flex justify-center mb-4">
-                                <span className="glass-surface-sm bg-white/50 border border-white/60 w-12 h-12 rounded-2xl flex items-center justify-center text-amber-500">
+                                <span className="interactive glass-surface-sm bg-white/50 border border-white/60 w-12 h-12 rounded-2xl flex items-center justify-center text-amber-500">
                                     <Star className="w-6 h-6" />
                                 </span>
                             </div>
@@ -308,24 +308,24 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.2 }}
-                    transition={{ duration: 0.6 }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                     className="max-w-7xl mx-auto glass-card glass-shine bg-white/55 border-white/60 rounded-3xl px-6 py-10 sm:px-10 shadow-glass"
                 >
                     <h3 className="text-xl font-bold text-[#13294B] mb-8 text-center">{t.legal.title}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <div>
+                        <div className="interactive rounded-2xl p-3 -m-3 hover:bg-white/30">
                             <h4 className="text-sm font-semibold text-[#13294B] mb-3">{t.legal.affiliation}</h4>
                             <p className="text-xs text-slate-500 leading-relaxed">{t.legal.affiliationText}</p>
                         </div>
-                        <div>
+                        <div className="interactive rounded-2xl p-3 -m-3 hover:bg-white/30">
                             <h4 className="text-sm font-semibold text-[#13294B] mb-3">{t.legal.aiDisclaimer}</h4>
                             <p className="text-xs text-slate-500 leading-relaxed">{t.legal.aiDisclaimerText}</p>
                         </div>
-                        <div>
+                        <div className="interactive rounded-2xl p-3 -m-3 hover:bg-white/30">
                             <h4 className="text-sm font-semibold text-[#13294B] mb-3">{t.legal.ip}</h4>
                             <p className="text-xs text-slate-500 leading-relaxed">{t.legal.ipText}</p>
                         </div>
-                        <div>
+                        <div className="interactive rounded-2xl p-3 -m-3 hover:bg-white/30">
                             <h4 className="text-sm font-semibold text-[#13294B] mb-3">{t.legal.privacy}</h4>
                             <p className="text-xs text-slate-500 leading-relaxed">{t.legal.privacyText}</p>
                         </div>
@@ -344,10 +344,10 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                         {t.footer.copyright}
                     </p>
                     <div className="flex flex-wrap justify-center gap-4 text-xs font-medium text-slate-500">
-                        <Link to={`/${lang}/terms`} className="hover:text-[#E84A27] transition-colors">{t.footer.terms}</Link>
-                        <Link to={`/${lang}/terms`} className="hover:text-[#E84A27] transition-colors">{t.footer.privacy}</Link>
-                        <Link to={`/${lang}/terms`} className="hover:text-[#E84A27] transition-colors">{t.footer.disclaimer}</Link>
-                        <a href="mailto:support@iguide.chat" className="hover:text-[#E84A27] transition-colors">{t.footer.contact}</a>
+                        <Link to={`/${lang}/terms`} className="link-underline inline-block hover:text-[#E84A27] transition-colors">{t.footer.terms}</Link>
+                        <Link to={`/${lang}/terms`} className="link-underline inline-block hover:text-[#E84A27] transition-colors">{t.footer.privacy}</Link>
+                        <Link to={`/${lang}/terms`} className="link-underline inline-block hover:text-[#E84A27] transition-colors">{t.footer.disclaimer}</Link>
+                        <a href="mailto:support@iguide.chat" className="link-underline inline-block hover:text-[#E84A27] transition-colors">{t.footer.contact}</a>
                     </div>
                 </div>
             </footer>

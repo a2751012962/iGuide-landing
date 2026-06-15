@@ -34,7 +34,7 @@ export default function InteractiveGlassCard({
             el.style.setProperty('--card-my', `${(py * 100).toFixed(1)}%`);
             const rotX = (0.5 - py) * 8; // tilt up/down
             const rotY = (px - 0.5) * 8; // tilt left/right
-            el.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateY(-0.375rem)`;
+            el.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateY(-0.375rem) scale(1.02)`;
         });
     };
 
@@ -53,7 +53,8 @@ export default function InteractiveGlassCard({
             ref={ref}
             onPointerMove={handleMove}
             onPointerLeave={handleLeave}
-            className={`card-spotlight transition-transform duration-300 ease-out ${className}`}
+            style={{ transition: 'transform 0.45s var(--ease-liquid), box-shadow 0.45s var(--ease-liquid)' }}
+            className={`card-spotlight ${className}`}
         >
             {children}
         </div>

@@ -10,6 +10,9 @@
   --color-brand-navy: #13294b;
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
     system-ui, "Helvetica Neue", Arial, sans-serif;
+  /* Shared "liquid" easing — the same curve the orb field drifts on, reused
+     across every discrete interaction so the whole site feels coherent. */
+  --ease-liquid: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @layer base {
@@ -18,6 +21,63 @@
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: smooth;
   }
+
+  /* Smooth, consistent keyboard focus feedback on every interactive element. */
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 2px solid rgba(232, 74, 39, 0.7);
+    outline-offset: 3px;
+    border-radius: 0.5rem;
+    transition: outline-offset 0.2s var(--ease-liquid);
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Shared interaction primitives — smooth hover lift, tactile press,
+ *  and animated link underlines. Layered on top of Tailwind utilities.
+ * ------------------------------------------------------------------ */
+
+/* Buttons / links / cards: gentle lift on hover, subtle squish on press.
+   Everything eases on the shared liquid curve. */
+.interactive {
+  transition:
+    transform 0.25s var(--ease-liquid),
+    color 0.25s var(--ease-liquid),
+    background-color 0.25s var(--ease-liquid),
+    box-shadow 0.25s var(--ease-liquid);
+  will-change: transform;
+}
+@media (hover: hover) {
+  .interactive:hover {
+    transform: translateY(-2px);
+  }
+}
+.interactive:active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 0.12s;
+}
+
+/* Animated underline that wipes in from the left on hover. Apply to inline
+   text links; the element must allow a positioned ::after (inline-block). */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 9999px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease-liquid);
+}
+.link-underline:hover::after {
+  transform: scaleX(1);
 }
 
 /* ------------------------------------------------------------------ *
@@ -199,7 +259,7 @@
   border-radius: inherit;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.35s ease;
+  transition: opacity 0.35s var(--ease-liquid);
   background: radial-gradient(
     36rem 36rem at var(--card-mx, 50%) var(--card-my, 50%),
     rgba(255, 255, 255, 0.55),
@@ -231,6 +291,15 @@
   }
   .liquid-sheen::after,
   .card-spotlight::before {
+    display: none !important;
+  }
+
+  /* Suppress the interaction micro-motion entirely. */
+  .interactive:hover,
+  .interactive:active {
+    transform: none !important;
+  }
+  .link-underline::after {
     display: none !important;
   }
 }
