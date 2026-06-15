@@ -36,7 +36,7 @@ export default function InteractiveGlassCard({
         p = Math.max(-1, Math.min(1, p));
         el.style.transition = 'transform 0.4s var(--ease-liquid)';
         // Tilt back as it rises past centre, forward as it enters from below.
-        el.style.transform = `perspective(1000px) rotateX(${(-p * 6).toFixed(2)}deg) rotateY(0deg)`;
+        el.style.transform = `perspective(1000px) rotateX(${(-p * 12).toFixed(2)}deg) rotateY(0deg)`;
         // Sheen slides vertically with travel and is brightest near centre.
         el.style.setProperty('--card-mx', '50%');
         el.style.setProperty('--card-my', `${(50 + p * 55).toFixed(1)}%`);
