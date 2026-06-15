@@ -130,7 +130,14 @@
 .orb-field {
   position: absolute;
   inset: -10%;
-  transform: translate3d(calc(var(--mx) * 2.2rem), calc(var(--my) * 2.2rem), 0);
+  /* --mx/--my: cursor parallax (set by GlassBackground); --sy: scroll parallax.
+     The base ambient gradient stays fixed behind, so drifting the orbs never
+     exposes an edge. */
+  transform: translate3d(
+    calc(var(--mx) * 2.2rem),
+    calc(var(--my) * 2.2rem + var(--sy, 0px)),
+    0
+  );
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }

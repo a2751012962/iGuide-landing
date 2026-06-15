@@ -37,6 +37,31 @@ export default function GlassBackground() {
         };
     }, []);
 
+    // Scroll parallax: drift the orb field upward at a fraction of the scroll
+    // distance so it reads as a deeper layer than the page content. Same
+    // client-only, rAF-throttled, reduced-motion-aware contract as above.
+    useEffect(() => {
+        const el = rootRef.current;
+        if (!el) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        let frame = 0;
+        const onScroll = () => {
+            if (frame) return;
+            frame = requestAnimationFrame(() => {
+                frame = 0;
+                el.style.setProperty('--sy', `${(-window.scrollY * 0.18).toFixed(1)}px`);
+            });
+        };
+
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+            if (frame) cancelAnimationFrame(frame);
+        };
+    }, []);
+
     return (
         <div className="ambient-bg" aria-hidden="true" ref={rootRef}>
             <div className="orb-field">
