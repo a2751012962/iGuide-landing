@@ -31,9 +31,10 @@ export default function InteractiveGlassCard({
         const rect = el.getBoundingClientRect();
         const vh = window.innerHeight || 1;
         const center = rect.top + rect.height / 2;
-        // -1 at the bottom of its travel, 0 at viewport centre, +1 at the top.
-        let p = (center - vh / 2) / (vh / 2 + rect.height / 2);
-        p = Math.max(-1, Math.min(1, p));
+        // -1 when the card's centre sits at the top of the viewport, 0 at the
+        // middle, +1 at the bottom. Independent of card height so tall mobile
+        // cards still get the full tilt range.
+        const p = Math.max(-1, Math.min(1, (center - vh / 2) / (vh / 2)));
         el.style.transition = 'transform 0.4s var(--ease-liquid)';
         // Tilt back as it rises past centre, forward as it enters from below.
         el.style.transform = `perspective(1000px) rotateX(${(-p * 12).toFixed(2)}deg) rotateY(0deg)`;
@@ -66,6 +67,11 @@ export default function InteractiveGlassCard({
     const handleMove = (e: ReactPointerEvent<HTMLDivElement>) => {
         const el = ref.current;
         if (!el || prefersReducedMotion()) return;
+        // Touch fires pointermove while scrolling and frequently never sends a
+        // matching pointerleave (it sends pointercancel) — taking over here
+        // would stick the card in the hover pose and kill scroll tilt. Let
+        // touch use the scroll-driven pose instead.
+        if (e.pointerType === 'touch') return;
         hovering.current = true;
         const rect = el.getBoundingClientRect();
         const px = (e.clientX - rect.left) / rect.width; // 0..1
@@ -102,6 +108,7 @@ export default function InteractiveGlassCard({
             ref={ref}
             onPointerMove={handleMove}
             onPointerLeave={handleLeave}
+            onPointerCancel={handleLeave}
             className={`card-spotlight ${className}`}
         >
             {children}
