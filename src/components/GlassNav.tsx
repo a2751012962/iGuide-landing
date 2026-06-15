@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LazyMotion, domAnimation, m, AnimatePresence } from 'motion/react';
+import { LazyMotion, domAnimation, m, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Compass, Globe, Menu, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLanguageSwitch } from './useLanguageSwitch';
@@ -30,6 +30,7 @@ export default function GlassNav({
     const navigate = useNavigate();
     const switchTo = useLanguageSwitch(lang);
     const [open, setOpen] = useState(false);
+    const reduceMotion = useReducedMotion();
 
     const linkClass = (key: typeof active) =>
         `interactive text-sm font-medium ${
@@ -94,7 +95,7 @@ export default function GlassNav({
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: 'auto', opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                            transition={{ duration: reduceMotion ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
                             className="md:hidden overflow-hidden"
                         >
                             <div className="border-t border-white/50 py-3 flex flex-col gap-1">
