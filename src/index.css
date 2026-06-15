@@ -45,7 +45,6 @@
     color 0.25s var(--ease-liquid),
     background-color 0.25s var(--ease-liquid),
     box-shadow 0.25s var(--ease-liquid);
-  will-change: transform;
 }
 @media (hover: hover) {
   .interactive:hover {

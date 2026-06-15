@@ -29,7 +29,7 @@ function CardInner({ card }: { card: GatewayCard }) {
         <div className="flex flex-col h-full w-full text-left">
             <div className="flex-grow">
                 <div
-                    className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 ease-[var(--ease-liquid)] group-hover:scale-110 glass-surface-sm bg-white/50 border border-white/60 ${card.accentText}`}
+                    className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 ease-liquid group-hover:scale-110 glass-surface-sm bg-white/50 border border-white/60 ${card.accentText}`}
                 >
                     <Icon className="w-7 h-7" />
                 </div>
@@ -47,7 +47,7 @@ function CardInner({ card }: { card: GatewayCard }) {
             <div className="mt-auto pt-6 border-t border-white/50">
                 <div className={`flex items-center justify-between font-semibold ${card.accentText}`}>
                     <span>{card.action}</span>
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover:translate-x-1 transition-transform duration-300 ease-[var(--ease-liquid)] glass-surface-sm bg-white/50 border border-white/60">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover:translate-x-1 transition-transform duration-300 ease-liquid glass-surface-sm bg-white/50 border border-white/60">
                         <ArrowRight className="w-5 h-5" />
                     </div>
                 </div>

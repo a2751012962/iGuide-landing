@@ -116,7 +116,7 @@ export default function Terms({ lang }: { lang: 'zh' | 'en' }) {
                 <div className="glass-surface-lg bg-white/60 border border-white/60 shadow-glass max-w-4xl mx-auto rounded-2xl px-4 sm:px-6">
                     <div className="flex justify-between items-center h-14">
                         <Link to={`/${lang}/about`} className="interactive flex items-center gap-2 group">
-                            <ArrowLeft className="w-5 h-5 text-slate-400 group-hover:text-[#E84A27] group-hover:-translate-x-0.5 transition-all duration-300 ease-[var(--ease-liquid)]" />
+                            <ArrowLeft className="w-5 h-5 text-slate-400 group-hover:text-[#E84A27] group-hover:-translate-x-0.5 transition-all duration-300 ease-liquid" />
                             <span className="text-sm font-medium text-slate-600 group-hover:text-[#E84A27] transition-colors">{t.nav.back}</span>
                         </Link>
                         <div className="flex items-center gap-6">
