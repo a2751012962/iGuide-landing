@@ -1,15 +1,19 @@
 import { Compass, Globe } from 'lucide-react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Seo from '../../components/Seo';
+import { useLanguageSwitch } from '../../components/useLanguageSwitch';
 
-export default function FeatureA() {
-    const [lang, setLang] = useState<'zh' | 'en'>('zh');
+export default function FeatureA({ lang }: { lang: 'zh' | 'en' }) {
+    const navigate = useNavigate();
+    const switchTo = useLanguageSwitch(lang);
 
     const content = {
         zh: {
+            seo: { title: '功能 A — iGuide', description: 'iGuide 功能 A 页面，专为 UIUC 学生设计的校园工具。' },
             nav: { about: '关于我们', featureA: '功能A', featureB: '功能B', login: '登录', signup: '免费注册', lang: 'EN' },
         },
         en: {
+            seo: { title: 'Feature A — iGuide', description: 'iGuide Feature A page, a campus tool built for UIUC students.' },
             nav: { about: 'About Us', featureA: 'Feature A', featureB: 'Feature B', login: 'Log in', signup: 'Sign up free', lang: '中文' },
         }
     };
@@ -18,6 +22,7 @@ export default function FeatureA() {
 
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
+            <Seo title={t.seo.title} description={t.seo.description} path="/featureA" lang={lang} breadcrumbLabel={t.nav.featureA} />
             {/* Navigation */}
             <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,13 +34,13 @@ export default function FeatureA() {
                             <span className="text-xl font-bold tracking-tight text-[#13294B]">iGuide</span>
                         </div>
                         <div className="hidden md:flex items-center gap-8">
-                            <Link to="/about" className="text-sm font-medium text-slate-600 hover:text-[#E84A27] transition-colors">{t.nav.about}</Link>
-                            <Link to="/featureA" className="text-sm font-medium text-[#E84A27] transition-colors">{t.nav.featureA}</Link>
-                            <Link to="/featureB" className="text-sm font-medium text-slate-600 hover:text-[#E84A27] transition-colors">{t.nav.featureB}</Link>
+                            <Link to={`/${lang}/about`} className="text-sm font-medium text-slate-600 hover:text-[#E84A27] transition-colors">{t.nav.about}</Link>
+                            <Link to={`/${lang}/featureA`} className="text-sm font-medium text-[#E84A27] transition-colors">{t.nav.featureA}</Link>
+                            <Link to={`/${lang}/featureB`} className="text-sm font-medium text-slate-600 hover:text-[#E84A27] transition-colors">{t.nav.featureB}</Link>
                         </div>
                         <div className="flex items-center gap-3 sm:gap-4">
                             <button
-                                onClick={() => setLang(lang === 'zh' ? 'en' : 'zh')}
+                                onClick={() => navigate(switchTo)}
                                 className="flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-[#E84A27] transition-colors px-2 py-1.5 rounded-md hover:bg-orange-50"
                             >
                                 <Globe className="w-4 h-4" />

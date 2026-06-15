@@ -1,1 +1,11 @@
-/* /index.html 200
+# Send root and legacy unprefixed paths to the English (x-default) versions.
+# Prerendered per-language pages (/en/..., /zh/...) are real HTML files and are
+# served directly, so no SPA catch-all (/* /index.html 200) is needed — that
+# rule trips Cloudflare's infinite-loop detection and gives no SEO benefit.
+/                /en/about        302
+/en              /en/about        302
+/zh              /zh/about        302
+/about           /en/about        301
+/featureA        /en/featureA     301
+/featureB        /en/featureB     301
+/terms           /en/terms        301

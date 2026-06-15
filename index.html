@@ -3,11 +3,65 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
+
+    <!-- Per-page <title>, description, robots, canonical, hreflang and OG/Twitter
+         tags are injected per route by the <Seo> component (src/components/Seo.tsx)
+         and the redirect routes. Only site-wide defaults live here; no static
+         <title> so it doesn't duplicate the per-page helmet title. -->
+    <meta name="author" content="iGuide Project" />
+    <meta name="theme-color" content="#E84A27" />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- Site-wide structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "iGuide",
+        "url": "https://iguide.chat",
+        "logo": "https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6",
+        "description": "An independent, student-built campus toolkit for UIUC students, featuring a Dorm Viewer and a 24/7 bilingual AI campus assistant. Not affiliated with the University of Illinois Urbana-Champaign.",
+        "email": "support@iguide.chat",
+        "areaServed": "University of Illinois Urbana-Champaign",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "email": "support@iguide.chat",
+          "contactType": "customer support",
+          "availableLanguage": ["en", "zh-Hans"]
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "iGuide",
+        "url": "https://iguide.chat",
+        "inLanguage": ["en", "zh-Hans"]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "iGuide AI Chatbot",
+        "url": "https://iguide.chat/en/about",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web",
+        "description": "A 24/7 bilingual AI assistant for UIUC students covering courses, professor ratings, campus life, food and transit.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-
