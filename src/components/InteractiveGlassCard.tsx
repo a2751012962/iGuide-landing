@@ -30,6 +30,9 @@ export default function InteractiveGlassCard({
         if (frame.current) return;
         frame.current = requestAnimationFrame(() => {
             frame.current = 0;
+            // Track the cursor 1:1 while moving — any transform transition here
+            // makes the tilt chase the pointer a beat behind (the "lag").
+            el.style.transition = 'none';
             el.style.setProperty('--card-mx', `${(px * 100).toFixed(1)}%`);
             el.style.setProperty('--card-my', `${(py * 100).toFixed(1)}%`);
             const rotX = (0.5 - py) * 8; // tilt up/down
@@ -45,6 +48,8 @@ export default function InteractiveGlassCard({
             cancelAnimationFrame(frame.current);
             frame.current = 0;
         }
+        // Ease smoothly back to rest only on leave.
+        el.style.transition = 'transform 0.45s var(--ease-liquid)';
         el.style.transform = '';
     };
 
@@ -53,7 +58,6 @@ export default function InteractiveGlassCard({
             ref={ref}
             onPointerMove={handleMove}
             onPointerLeave={handleLeave}
-            style={{ transition: 'transform 0.45s var(--ease-liquid), box-shadow 0.45s var(--ease-liquid)' }}
             className={`card-spotlight ${className}`}
         >
             {children}
