@@ -37,9 +37,11 @@
  *  and animated link underlines. Layered on top of Tailwind utilities.
  * ------------------------------------------------------------------ */
 
-/* Buttons / links / cards: gentle lift on hover, subtle squish on press.
-   Everything eases on the shared liquid curve. */
-.interactive {
+/* Gentle hover lift on the shared liquid curve. `.lift` is the decorative
+   variant for non-clickable surfaces; `.interactive` adds a press squish and
+   is reserved for genuinely clickable elements (buttons, links, cards). */
+.interactive,
+.lift {
   transition:
     transform 0.25s var(--ease-liquid),
     color 0.25s var(--ease-liquid),
@@ -47,7 +49,8 @@
     box-shadow 0.25s var(--ease-liquid);
 }
 @media (hover: hover) {
-  .interactive:hover {
+  .interactive:hover,
+  .lift:hover {
     transform: translateY(-2px);
   }
 }
@@ -327,7 +330,8 @@
 
   /* Suppress the interaction micro-motion entirely. */
   .interactive:hover,
-  .interactive:active {
+  .interactive:active,
+  .lift:hover {
     transform: none !important;
   }
   .link-underline::after {

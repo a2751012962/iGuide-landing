@@ -270,7 +270,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/50">
                         <div className="p-4">
                             <div className="flex justify-center mb-4">
-                                <span className="interactive glass-surface-sm bg-white/50 border border-white/60 w-12 h-12 rounded-2xl flex items-center justify-center text-[#E84A27]">
+                                <span className="lift glass-surface-sm bg-white/50 border border-white/60 w-12 h-12 rounded-2xl flex items-center justify-center text-[#E84A27]">
                                     <Users className="w-6 h-6" />
                                 </span>
                             </div>
@@ -279,7 +279,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                         </div>
                         <div className="p-4 pt-8 md:pt-4">
                             <div className="flex justify-center mb-4">
-                                <span className="interactive glass-surface-sm bg-white/50 border border-white/60 w-12 h-12 rounded-2xl flex items-center justify-center text-[#13294B]">
+                                <span className="lift glass-surface-sm bg-white/50 border border-white/60 w-12 h-12 rounded-2xl flex items-center justify-center text-[#13294B]">
                                     <Shield className="w-6 h-6" />
                                 </span>
                             </div>
@@ -288,7 +288,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                         </div>
                         <div className="p-4 pt-8 md:pt-4">
                             <div className="flex justify-center mb-4">
-                                <span className="interactive glass-surface-sm bg-white/50 border border-white/60 w-12 h-12 rounded-2xl flex items-center justify-center text-amber-500">
+                                <span className="lift glass-surface-sm bg-white/50 border border-white/60 w-12 h-12 rounded-2xl flex items-center justify-center text-amber-500">
                                     <Star className="w-6 h-6" />
                                 </span>
                             </div>
@@ -310,19 +310,19 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                 >
                     <h3 className="text-xl font-bold text-[#13294B] mb-8 text-center">{t.legal.title}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <div className="interactive rounded-2xl p-3 -m-3 hover:bg-white/30">
+                        <div className="lift rounded-2xl p-3 -m-3 hover:bg-white/30">
                             <h4 className="text-sm font-semibold text-[#13294B] mb-3">{t.legal.affiliation}</h4>
                             <p className="text-xs text-slate-500 leading-relaxed">{t.legal.affiliationText}</p>
                         </div>
-                        <div className="interactive rounded-2xl p-3 -m-3 hover:bg-white/30">
+                        <div className="lift rounded-2xl p-3 -m-3 hover:bg-white/30">
                             <h4 className="text-sm font-semibold text-[#13294B] mb-3">{t.legal.aiDisclaimer}</h4>
                             <p className="text-xs text-slate-500 leading-relaxed">{t.legal.aiDisclaimerText}</p>
                         </div>
-                        <div className="interactive rounded-2xl p-3 -m-3 hover:bg-white/30">
+                        <div className="lift rounded-2xl p-3 -m-3 hover:bg-white/30">
                             <h4 className="text-sm font-semibold text-[#13294B] mb-3">{t.legal.ip}</h4>
                             <p className="text-xs text-slate-500 leading-relaxed">{t.legal.ipText}</p>
                         </div>
-                        <div className="interactive rounded-2xl p-3 -m-3 hover:bg-white/30">
+                        <div className="lift rounded-2xl p-3 -m-3 hover:bg-white/30">
                             <h4 className="text-sm font-semibold text-[#13294B] mb-3">{t.legal.privacy}</h4>
                             <p className="text-xs text-slate-500 leading-relaxed">{t.legal.privacyText}</p>
                         </div>
