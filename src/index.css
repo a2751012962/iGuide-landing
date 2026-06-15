@@ -271,15 +271,17 @@
   45%, 100% { background-position: -60% 0; }
 }
 
-/* Cursor spotlight for interactive glass cards. Driven by --card-mx /
-   --card-my (cursor position within the card, in %), set in JS. */
+/* Spotlight for interactive glass cards. Position (--card-mx / --card-my) and
+   brightness (--card-glow, 0..1) are set in JS — from the cursor on hover, and
+   from the card's viewport position while scrolling (the "legendary card"
+   sheen, which is what lights the cards on touch devices). */
 .card-spotlight::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  opacity: 0;
+  opacity: var(--card-glow, 0);
   transition: opacity 0.35s var(--ease-liquid);
   background: radial-gradient(
     36rem 36rem at var(--card-mx, 50%) var(--card-my, 50%),
