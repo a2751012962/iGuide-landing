@@ -36,10 +36,10 @@ export default function GlassNav({
 
     return (
         <nav className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
-            <div className="glass-nav max-w-7xl mx-auto rounded-2xl px-4 sm:px-6">
+            <div className="glass-surface-lg bg-white/60 border border-white/60 shadow-glass max-w-7xl mx-auto rounded-2xl px-4 sm:px-6">
                 <div className="flex justify-between items-center h-14">
                     <Link to={`/${lang}/about`} className="flex items-center gap-2">
-                        <div className="w-8 h-8 glass-cta-orange rounded-xl flex items-center justify-center text-white">
+                        <div className="w-8 h-8 bg-[#E84A27] rounded-xl flex items-center justify-center text-white shadow-sm">
                             <Compass className="w-5 h-5" />
                         </div>
                         <span className="text-xl font-bold tracking-tight text-[#13294B]">iGuide</span>
@@ -58,7 +58,7 @@ export default function GlassNav({
                             {labels.lang}
                         </button>
                         <button className="text-sm font-medium text-slate-600 hover:text-[#13294B] transition-colors hidden sm:block">{labels.login}</button>
-                        <button className="glass-cta px-4 py-2 rounded-full text-sm font-medium">
+                        <button className="glass-btn text-white bg-[#13294B]/90 border-white/15 px-4 py-2 rounded-full text-sm font-medium">
                             {labels.signup}
                         </button>
                     </div>

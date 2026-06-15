@@ -1,14 +1,12 @@
 @import "tailwindcss";
 
-/* ------------------------------------------------------------------ *
- *  iGuide — Apple "Liquid Glass" design system
- *  ----------------------------------------------------------------
- *  A light, dimensional aesthetic: a soft colour-mesh wallpaper sits
- *  behind frosted, translucent panels. Panels carry a specular top
- *  edge + inner highlight so they read like real glass refracting the
- *  colour behind them. Brand colours (Illini orange / navy) drive the
- *  ambient orbs and accents.
- * ------------------------------------------------------------------ */
+/* Ready-made Apple "Liquid Glass" surfaces come from the liquidglass-tailwind
+   plugin (glass-card, glass-surface*, glass-btn, glass-shine, shadow-glass …).
+   The genuine cursor-reactive refraction on the hero cards comes from the
+   liquid-glass-react component. We only keep, locally:
+     1. the ambient colour wallpaper the glass refracts, and
+     2. a tiny layout glue so liquid-glass-react fills the card grid. */
+@plugin "liquidglass-tailwind";
 
 @theme {
   --color-brand-orange: #e84a27;
@@ -26,7 +24,8 @@
 }
 
 /* ------------------------------------------------------------------ *
- *  Ambient wallpaper + floating colour orbs
+ *  Ambient wallpaper + floating colour orbs (decorative backdrop the
+ *  frosted glass refracts — not a glass surface itself).
  * ------------------------------------------------------------------ */
 .ambient-bg {
   position: fixed;
@@ -93,114 +92,19 @@
 }
 
 /* ------------------------------------------------------------------ *
- *  Glass surfaces
+ *  Layout glue: make the liquid-glass-react wrapper (and its inner
+ *  `.glass` element, which is inline-flex by default) stretch to fill a
+ *  grid column so the two hero cards stay full-width and equal-height.
  * ------------------------------------------------------------------ */
-
-/* Base frosted panel */
-.glass {
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow:
-    0 10px 30px -8px rgba(19, 41, 75, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7),
-    inset 0 -1px 0 rgba(19, 41, 75, 0.04);
-}
-
-/* Denser panel for content-heavy areas (legal, terms, stats) */
-.glass-strong {
-  background: rgba(255, 255, 255, 0.66);
-  backdrop-filter: blur(28px) saturate(190%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow:
-    0 16px 40px -12px rgba(19, 41, 75, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    inset 0 -1px 0 rgba(19, 41, 75, 0.04);
-}
-
-/* Floating navigation bar */
-.glass-nav {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow:
-    0 8px 28px -8px rgba(19, 41, 75, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.85);
-}
-
-/* Small translucent chip (badges / icon tiles) */
-.glass-chip {
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(12px) saturate(160%);
-  -webkit-backdrop-filter: blur(12px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
-}
-
-/* Specular sweep that rides across glass cards on hover */
-.glass-card {
-  position: relative;
-  overflow: hidden;
-}
-.glass-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(
-    120deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.45) 48%,
-    transparent 66%
-  );
-  transform: translateX(-120%);
-  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
-}
-.glass-card:hover::after {
-  transform: translateX(120%);
-}
-
-/* Primary tinted-glass button (navy) */
-.glass-cta {
-  background: linear-gradient(135deg, rgba(19, 41, 75, 0.92), rgba(19, 41, 75, 0.78));
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow:
-    0 8px 20px -6px rgba(19, 41, 75, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.glass-cta:hover {
-  transform: translateY(-1px);
-  box-shadow:
-    0 12px 26px -6px rgba(19, 41, 75, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-/* Accent tinted-glass button (orange) */
-.glass-cta-orange {
-  background: linear-gradient(135deg, rgba(232, 74, 39, 0.95), rgba(255, 122, 71, 0.82));
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow:
-    0 8px 20px -6px rgba(232, 74, 39, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.35);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.glass-cta-orange:hover {
-  transform: translateY(-1px);
-  box-shadow:
-    0 12px 26px -6px rgba(232, 74, 39, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+.lg-fill > .glass {
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 /* ------------------------------------------------------------------ *
- *  Respect users who prefer reduced motion: neutralize animations and
- *  transitions (avoids motion-triggered discomfort, reduces INP work).
+ *  Respect users who prefer reduced motion.
  * ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   *,

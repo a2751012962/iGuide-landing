@@ -113,7 +113,7 @@ export default function Terms({ lang }: { lang: 'zh' | 'en' }) {
             <GlassBackground />
             {/* Simple Navigation */}
             <nav className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
-                <div className="glass-nav max-w-4xl mx-auto rounded-2xl px-4 sm:px-6">
+                <div className="glass-surface-lg bg-white/60 border border-white/60 shadow-glass max-w-4xl mx-auto rounded-2xl px-4 sm:px-6">
                     <div className="flex justify-between items-center h-14">
                         <Link to={`/${lang}/about`} className="flex items-center gap-2 group">
                             <ArrowLeft className="w-5 h-5 text-slate-400 group-hover:text-[#E84A27] transition-colors" />
@@ -138,7 +138,7 @@ export default function Terms({ lang }: { lang: 'zh' | 'en' }) {
 
             {/* Content Area */}
             <main className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-                <div className="glass-strong rounded-3xl p-8 sm:p-12 prose prose-slate max-w-none">
+                <div className="glass-card-elevated glass-shine bg-white/70 border-white/70 shadow-glass-lg rounded-3xl p-8 sm:p-12 prose prose-slate max-w-none">
                     <h1 className="text-3xl font-bold text-[#13294B] mb-2">{t.title}</h1>
                     <p className="text-sm text-slate-500 mb-8 border-b border-white/50 pb-8">{t.lastUpdated}</p>
 
@@ -162,7 +162,7 @@ export default function Terms({ lang }: { lang: 'zh' | 'en' }) {
 
             {/* Simple Footer */}
             <footer className="px-4 sm:px-6 lg:px-8 pb-6 pt-4">
-                <div className="max-w-4xl mx-auto glass-nav rounded-2xl py-5 text-center">
+                <div className="max-w-4xl mx-auto glass-surface-lg bg-white/60 border border-white/60 shadow-glass rounded-2xl py-5 text-center">
                     <p className="text-slate-500 text-xs">
                         {t.footer}
                     </p>

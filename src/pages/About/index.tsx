@@ -1,11 +1,75 @@
+import { useRef } from 'react';
 import { LazyMotion, domAnimation, m } from 'motion/react';
 import { Home, MessageSquare, Compass, ArrowRight, CheckCircle2, Users, Star, Shield } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { ClientOnly } from 'vite-react-ssg';
+import LiquidGlass from 'liquid-glass-react';
 import Seo from '../../components/Seo';
 import GlassBackground from '../../components/GlassBackground';
 import GlassNav from '../../components/GlassNav';
 
+type GatewayCard = {
+    key: string;
+    href: string;
+    icon: LucideIcon;
+    accentText: string;
+    title: string;
+    subtitle: string;
+    features: string[];
+    action: string;
+    delay: number;
+};
+
+/**
+ * Inner content of a gateway card. Rendered in two variants:
+ *  - `glass`: white-on-dark, sits inside the liquid-glass-react surface
+ *    (which forces white text and supplies its own translucent panel).
+ *  - `light`: the static, prerendered/non-Chromium fallback on a plugin
+ *    glass-card surface, using the site's navy/slate palette.
+ */
+function CardInner({ card, variant }: { card: GatewayCard; variant: 'glass' | 'light' }) {
+    const dark = variant === 'glass';
+    const Icon = card.icon;
+    return (
+        <div className="flex flex-col h-full w-full text-left">
+            <div className="flex-grow">
+                <div
+                    className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110 ${
+                        dark ? 'bg-white/20 text-white' : `glass-surface-sm bg-white/50 border border-white/60 ${card.accentText}`
+                    }`}
+                >
+                    <Icon className="w-7 h-7" />
+                </div>
+                <h2 className={`text-2xl font-bold mb-2 ${dark ? 'text-white' : 'text-[#13294B]'}`}>{card.title}</h2>
+                <p className={`mb-8 text-lg ${dark ? 'text-white/75' : 'text-slate-500'}`}>{card.subtitle}</p>
+                <ul className="space-y-3 mb-10">
+                    {card.features.map((feature, idx) => (
+                        <li key={idx} className={`flex items-center ${dark ? 'text-white/90' : 'text-slate-600'}`}>
+                            <CheckCircle2 className={`w-5 h-5 mr-3 shrink-0 ${dark ? 'text-emerald-300' : 'text-emerald-500'}`} />
+                            <span>{feature}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            <div className={`mt-auto pt-6 border-t ${dark ? 'border-white/20' : 'border-white/50'}`}>
+                <div className={`flex items-center justify-between font-semibold ${dark ? 'text-white' : card.accentText}`}>
+                    <span>{card.action}</span>
+                    <div
+                        className={`w-10 h-10 rounded-full flex items-center justify-center group-hover:translate-x-1 transition-all ${
+                            dark ? 'bg-white/20' : 'glass-surface-sm bg-white/50 border border-white/60'
+                        }`}
+                    >
+                        <ArrowRight className="w-5 h-5" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 export default function About({ lang }: { lang: 'zh' | 'en' }) {
+    const gridRef = useRef<HTMLDivElement>(null);
 
     const content = {
         zh: {
@@ -128,6 +192,31 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
 
     const t = content[lang];
 
+    const cards: GatewayCard[] = [
+        {
+            key: 'dorm',
+            href: 'https://iguide.chat/dorms',
+            icon: Home,
+            accentText: 'text-[#E84A27]',
+            title: t.cards.dorm.title,
+            subtitle: t.cards.dorm.subtitle,
+            features: t.cards.dorm.features,
+            action: t.cards.dorm.action,
+            delay: 0.2,
+        },
+        {
+            key: 'chat',
+            href: 'https://iguide.chat/chat',
+            icon: MessageSquare,
+            accentText: 'text-[#13294B]',
+            title: t.cards.chat.title,
+            subtitle: t.cards.chat.subtitle,
+            features: t.cards.chat.features,
+            action: t.cards.chat.action,
+            delay: 0.3,
+        },
+    ];
+
     return (
         <LazyMotion features={domAnimation}>
         <div className="min-h-screen font-sans text-slate-800 selection:bg-orange-100 selection:text-orange-900">
@@ -143,7 +232,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                     transition={{ duration: 0.6 }}
                     className="max-w-3xl mx-auto"
                 >
-                    <div className="glass-chip inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[#E84A27] text-sm font-medium mb-8">
+                    <div className="glass-surface-sm bg-white/50 border border-white/60 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[#E84A27] text-sm font-medium mb-8 shadow-glass">
                         <span className="relative flex h-2 w-2">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E84A27] opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E84A27]"></span>
@@ -161,103 +250,60 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                     </p>
                 </m.div>
 
-                {/* The Gateway Cards */}
-                <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto text-left">
-                    {/* Card A: Dorm Viewer */}
-                    <m.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                    >
-                        <a
-                            href="https://iguide.chat/dorms"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="glass glass-card group flex flex-col h-full rounded-3xl p-8 sm:p-10 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_50px_-12px_rgba(232,74,39,0.28)]"
+                {/* The Gateway Cards — genuine liquid-glass refraction (Chromium),
+                    with a static plugin glass-card fallback for prerender / Safari /
+                    Firefox / reduced-transparency. */}
+                <div ref={gridRef} className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto text-left">
+                    {cards.map((card) => (
+                        <m.div
+                            key={card.key}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: card.delay }}
+                            className="h-full"
                         >
-                            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-orange-200/40 to-transparent rounded-bl-full -mr-10 -mt-10 transition-transform duration-500 group-hover:scale-110"></div>
-
-                            <div className="relative z-10 flex-grow">
-                                <div className="w-14 h-14 glass-chip text-[#E84A27] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                                    <Home className="w-7 h-7" />
-                                </div>
-
-                                <h2 className="text-2xl font-bold text-[#13294B] mb-2">{t.cards.dorm.title}</h2>
-                                <p className="text-slate-500 mb-8 text-lg">{t.cards.dorm.subtitle}</p>
-
-                                <ul className="space-y-3 mb-10">
-                                    {t.cards.dorm.features.map((feature, idx) => (
-                                        <li key={idx} className="flex items-center text-slate-600">
-                                            <CheckCircle2 className="w-5 h-5 text-emerald-500 mr-3 shrink-0" />
-                                            <span>{feature}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-
-                            <div className="relative z-10 mt-auto pt-6 border-t border-white/50">
-                                <div className="flex items-center justify-between text-[#E84A27] font-semibold group-hover:text-orange-600 transition-colors">
-                                    <span>{t.cards.dorm.action}</span>
-                                    <div className="w-10 h-10 rounded-full glass-chip flex items-center justify-center group-hover:translate-x-1 transition-all">
-                                        <ArrowRight className="w-5 h-5" />
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </m.div>
-
-                    {/* Card B: AI Chatbot */}
-                    <m.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.3 }}
-                    >
-                        <a
-                            href="https://iguide.chat/chat"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="glass glass-card group flex flex-col h-full rounded-3xl p-8 sm:p-10 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_50px_-12px_rgba(19,41,75,0.28)]"
-                        >
-                            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-blue-200/40 to-transparent rounded-bl-full -mr-10 -mt-10 transition-transform duration-500 group-hover:scale-110"></div>
-
-                            <div className="relative z-10 flex-grow">
-                                <div className="w-14 h-14 glass-chip text-[#13294B] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300">
-                                    <MessageSquare className="w-7 h-7" />
-                                </div>
-
-                                <h2 className="text-2xl font-bold text-[#13294B] mb-2">{t.cards.chat.title}</h2>
-                                <p className="text-slate-500 mb-8 text-lg">{t.cards.chat.subtitle}</p>
-
-                                <ul className="space-y-3 mb-10">
-                                    {t.cards.chat.features.map((feature, idx) => (
-                                        <li key={idx} className="flex items-center text-slate-600">
-                                            <CheckCircle2 className="w-5 h-5 text-emerald-500 mr-3 shrink-0" />
-                                            <span>{feature}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-
-                            <div className="relative z-10 mt-auto pt-6 border-t border-white/50">
-                                <div className="flex items-center justify-between text-[#13294B] font-semibold group-hover:text-blue-800 transition-colors">
-                                    <span>{t.cards.chat.action}</span>
-                                    <div className="w-10 h-10 rounded-full glass-chip flex items-center justify-center group-hover:translate-x-1 transition-all">
-                                        <ArrowRight className="w-5 h-5" />
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </m.div>
+                            <a
+                                href={card.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group block h-full"
+                            >
+                                <ClientOnly
+                                    fallback={
+                                        <div className="glass-card glass-shine bg-white/60 border-white/60 rounded-3xl p-8 sm:p-10 h-full shadow-glass transition-transform duration-300 group-hover:-translate-y-1.5">
+                                            <CardInner card={card} variant="light" />
+                                        </div>
+                                    }
+                                >
+                                    {() => (
+                                        <LiquidGlass
+                                            cornerRadius={28}
+                                            padding="36px"
+                                            overLight
+                                            elasticity={0.18}
+                                            blurAmount={0.08}
+                                            saturation={150}
+                                            mouseContainer={gridRef}
+                                            className="lg-fill h-full w-full transition-transform duration-300 group-hover:-translate-y-1.5"
+                                            style={{ height: '100%' }}
+                                        >
+                                            <CardInner card={card} variant="glass" />
+                                        </LiquidGlass>
+                                    )}
+                                </ClientOnly>
+                            </a>
+                        </m.div>
+                    ))}
                 </div>
             </section>
 
             {/* Stats / Social Proof Section */}
             <section className="py-16 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-5xl mx-auto glass-strong rounded-3xl px-6 py-10 sm:px-10">
+                <div className="max-w-5xl mx-auto glass-card-elevated glass-shine bg-white/65 border-white/70 rounded-3xl px-6 py-10 sm:px-10 shadow-glass-lg">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/50">
                         <div className="p-4">
                             <div className="flex justify-center mb-4">
-                                <span className="glass-chip w-12 h-12 rounded-2xl flex items-center justify-center text-[#E84A27]">
+                                <span className="glass-surface-sm bg-white/50 border border-white/60 w-12 h-12 rounded-2xl flex items-center justify-center text-[#E84A27]">
                                     <Users className="w-6 h-6" />
                                 </span>
                             </div>
@@ -266,7 +312,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                         </div>
                         <div className="p-4 pt-8 md:pt-4">
                             <div className="flex justify-center mb-4">
-                                <span className="glass-chip w-12 h-12 rounded-2xl flex items-center justify-center text-[#13294B]">
+                                <span className="glass-surface-sm bg-white/50 border border-white/60 w-12 h-12 rounded-2xl flex items-center justify-center text-[#13294B]">
                                     <Shield className="w-6 h-6" />
                                 </span>
                             </div>
@@ -275,7 +321,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                         </div>
                         <div className="p-4 pt-8 md:pt-4">
                             <div className="flex justify-center mb-4">
-                                <span className="glass-chip w-12 h-12 rounded-2xl flex items-center justify-center text-amber-500">
+                                <span className="glass-surface-sm bg-white/50 border border-white/60 w-12 h-12 rounded-2xl flex items-center justify-center text-amber-500">
                                     <Star className="w-6 h-6" />
                                 </span>
                             </div>
@@ -288,7 +334,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
 
             {/* Legal / Compliance Section */}
             <section className="py-8 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-7xl mx-auto glass rounded-3xl px-6 py-10 sm:px-10">
+                <div className="max-w-7xl mx-auto glass-card glass-shine bg-white/55 border-white/60 rounded-3xl px-6 py-10 sm:px-10 shadow-glass">
                     <h3 className="text-xl font-bold text-[#13294B] mb-8 text-center">{t.legal.title}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         <div>
@@ -313,7 +359,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
 
             {/* Footer */}
             <footer className="px-4 sm:px-6 lg:px-8 pb-6 pt-4">
-                <div className="max-w-7xl mx-auto glass-nav rounded-2xl px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div className="max-w-7xl mx-auto glass-surface-lg bg-white/60 border border-white/60 shadow-glass rounded-2xl px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-6">
                     <div className="flex items-center gap-2">
                         <Compass className="w-5 h-5 text-[#E84A27]" />
                         <span className="text-lg font-bold tracking-tight text-[#13294B]">iGuide</span>
