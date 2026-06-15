@@ -1,7 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Compass, ArrowLeft, Globe } from 'lucide-react';
 import Seo from '../../components/Seo';
-import GlassBackground from '../../components/GlassBackground';
 import { useLanguageSwitch } from '../../components/useLanguageSwitch';
 
 export default function Terms({ lang }: { lang: 'zh' | 'en' }) {
@@ -110,7 +109,6 @@ export default function Terms({ lang }: { lang: 'zh' | 'en' }) {
     return (
         <div className="min-h-screen font-sans text-slate-800 selection:bg-orange-100 selection:text-orange-900">
             <Seo title={t.seo.title} description={t.seo.description} path="/terms" lang={lang} type="article" breadcrumbLabel={t.title} />
-            <GlassBackground />
             {/* Simple Navigation */}
             <nav className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
                 <div className="glass-surface-lg bg-white/60 border border-white/60 shadow-glass max-w-4xl mx-auto rounded-2xl px-4 sm:px-6">

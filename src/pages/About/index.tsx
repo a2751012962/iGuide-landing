@@ -1,9 +1,8 @@
-import { LazyMotion, domAnimation, m } from 'motion/react';
+import { m } from 'motion/react';
 import { Home, MessageSquare, Compass, ArrowRight, CheckCircle2, Users, Star, Shield } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Seo from '../../components/Seo';
-import GlassBackground from '../../components/GlassBackground';
 import GlassNav from '../../components/GlassNav';
 import InteractiveGlassCard from '../../components/InteractiveGlassCard';
 
@@ -204,10 +203,8 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
     ];
 
     return (
-        <LazyMotion features={domAnimation}>
         <div className="min-h-screen font-sans text-slate-800 selection:bg-orange-100 selection:text-orange-900">
             <Seo title={t.seo.title} description={t.seo.description} path="/about" lang={lang} breadcrumbLabel={t.nav.about} />
-            <GlassBackground />
             <GlassNav lang={lang} labels={t.nav} active="about" />
 
             {/* Hero Section */}
@@ -352,6 +349,5 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                 </div>
             </footer>
         </div>
-        </LazyMotion>
     );
 }

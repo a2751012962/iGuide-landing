@@ -1,5 +1,4 @@
 import Seo from '../../components/Seo';
-import GlassBackground from '../../components/GlassBackground';
 import GlassNav from '../../components/GlassNav';
 
 export default function FeatureA({ lang }: { lang: 'zh' | 'en' }) {
@@ -23,7 +22,6 @@ export default function FeatureA({ lang }: { lang: 'zh' | 'en' }) {
     return (
         <div className="min-h-screen font-sans text-slate-800">
             <Seo title={t.seo.title} description={t.seo.description} path="/featureA" lang={lang} breadcrumbLabel={t.nav.featureA} />
-            <GlassBackground />
             <GlassNav lang={lang} labels={t.nav} active="featureA" />
 
             {/* Content */}

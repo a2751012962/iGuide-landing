@@ -3,6 +3,7 @@ import About from './pages/About';
 import FeatureA from './pages/FeatureA';
 import FeatureB from './pages/FeatureB';
 import Terms from './pages/Terms';
+import Layout from './components/Layout';
 import RedirectTo from './components/RedirectTo';
 
 /**
@@ -20,14 +21,22 @@ export const routes: RouteRecord[] = [
     { path: '/en', element: <RedirectTo to="/en/about" /> },
     { path: '/zh', element: <RedirectTo to="/zh/about" /> },
 
-    { path: '/en/about', element: <About lang="en" /> },
-    { path: '/zh/about', element: <About lang="zh" /> },
-    { path: '/en/featureA', element: <FeatureA lang="en" /> },
-    { path: '/zh/featureA', element: <FeatureA lang="zh" /> },
-    { path: '/en/featureB', element: <FeatureB lang="en" /> },
-    { path: '/zh/featureB', element: <FeatureB lang="zh" /> },
-    { path: '/en/terms', element: <Terms lang="en" /> },
-    { path: '/zh/terms', element: <Terms lang="zh" /> },
+    // Content pages share a persistent shell (ambient background + crossfade
+    // page transition) provided by <Layout>; each remains its own prerendered
+    // URL via the explicit child paths below.
+    {
+        element: <Layout />,
+        children: [
+            { path: '/en/about', element: <About lang="en" /> },
+            { path: '/zh/about', element: <About lang="zh" /> },
+            { path: '/en/featureA', element: <FeatureA lang="en" /> },
+            { path: '/zh/featureA', element: <FeatureA lang="zh" /> },
+            { path: '/en/featureB', element: <FeatureB lang="en" /> },
+            { path: '/zh/featureB', element: <FeatureB lang="zh" /> },
+            { path: '/en/terms', element: <Terms lang="en" /> },
+            { path: '/zh/terms', element: <Terms lang="zh" /> },
+        ],
+    },
 
     // Legacy paths (fallback; primary handling is edge redirects in _redirects)
     { path: '/about', element: <RedirectTo to="/en/about" /> },
