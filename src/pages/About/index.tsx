@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Seo from '../../components/Seo';
 import GlassBackground from '../../components/GlassBackground';
 import GlassNav from '../../components/GlassNav';
+import InteractiveGlassCard from '../../components/InteractiveGlassCard';
 
 type GatewayCard = {
     key: string;
@@ -227,7 +228,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
 
                     <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#13294B] tracking-tight mb-6 leading-tight">
                         {t.hero.title1} <br className="hidden sm:block" />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E84A27] to-orange-400">{t.hero.titleHighlight}</span>
+                        <span className="gradient-flow">{t.hero.titleHighlight}</span>
                     </h1>
 
                     <p className="text-lg sm:text-xl text-slate-500 mb-12 leading-relaxed max-w-2xl mx-auto">
@@ -251,9 +252,9 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                                 rel="noopener noreferrer"
                                 className="group block h-full"
                             >
-                                <div className="glass-card glass-shine bg-white/60 border-white/60 rounded-3xl p-8 sm:p-10 h-full shadow-glass transition-transform duration-300 group-hover:-translate-y-1.5">
+                                <InteractiveGlassCard className="glass-card glass-shine liquid-sheen overflow-hidden bg-white/60 border-white/60 rounded-3xl p-8 sm:p-10 h-full shadow-glass group-hover:shadow-glass-lg">
                                     <CardInner card={card} />
-                                </div>
+                                </InteractiveGlassCard>
                             </a>
                         </m.div>
                     ))}
@@ -262,7 +263,13 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
 
             {/* Stats / Social Proof Section */}
             <section className="py-16 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-5xl mx-auto glass-card-elevated glass-shine bg-white/65 border-white/70 rounded-3xl px-6 py-10 sm:px-10 shadow-glass-lg">
+                <m.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6 }}
+                    className="max-w-5xl mx-auto glass-card-elevated glass-shine liquid-sheen overflow-hidden bg-white/65 border-white/70 rounded-3xl px-6 py-10 sm:px-10 shadow-glass-lg"
+                >
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/50">
                         <div className="p-4">
                             <div className="flex justify-center mb-4">
@@ -292,12 +299,18 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                             <p className="text-slate-500 font-medium">{t.stats.satisfaction}</p>
                         </div>
                     </div>
-                </div>
+                </m.div>
             </section>
 
             {/* Legal / Compliance Section */}
             <section className="py-8 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-7xl mx-auto glass-card glass-shine bg-white/55 border-white/60 rounded-3xl px-6 py-10 sm:px-10 shadow-glass">
+                <m.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.6 }}
+                    className="max-w-7xl mx-auto glass-card glass-shine bg-white/55 border-white/60 rounded-3xl px-6 py-10 sm:px-10 shadow-glass"
+                >
                     <h3 className="text-xl font-bold text-[#13294B] mb-8 text-center">{t.legal.title}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         <div>
@@ -317,7 +330,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                             <p className="text-xs text-slate-500 leading-relaxed">{t.legal.privacyText}</p>
                         </div>
                     </div>
-                </div>
+                </m.div>
             </section>
 
             {/* Footer */}
