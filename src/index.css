@@ -100,9 +100,8 @@
 
 /* ------------------------------------------------------------------ *
  *  Ambient wallpaper + floating colour orbs (decorative backdrop the
- *  frosted glass refracts — not a glass surface itself). The orbs live
- *  inside a `filter: url(#goo)` layer so overlapping blobs fuse into
- *  organic, lava-lamp-style liquid shapes.
+ *  frosted glass refracts — not a glass surface itself). Each orb is heavily
+ *  blurred so overlapping blobs melt into soft, lava-lamp-style colour clouds.
  * ------------------------------------------------------------------ */
 .ambient-bg {
   position: fixed;
@@ -121,11 +120,15 @@
   animation: mesh-shift 32s ease-in-out infinite;
 }
 
-/* The gooey blob field — drifts gently toward the cursor via parallax vars. */
+/* The soft blob field — drifts gently toward the cursor via parallax vars.
+   Each orb is already heavily blurred, so they read as merging colour clouds
+   on their own. We deliberately avoid an SVG `filter: url(#goo)` here: filtering
+   this full-viewport, constantly-animating layer on the CPU every frame (and on
+   every cursor move) saturated the main thread and made the whole UI — most
+   visibly navigation — lag. Plain blurred orbs composite on the GPU instead. */
 .orb-field {
   position: absolute;
   inset: -10%;
-  filter: url(#goo);
   transform: translate3d(calc(var(--mx) * 2.2rem), calc(var(--my) * 2.2rem), 0);
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
