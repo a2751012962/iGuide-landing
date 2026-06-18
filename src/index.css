@@ -161,14 +161,6 @@
   );
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
-  /* Slow, autonomous "breathing" so the colour field keeps gently shifting
-     even when the pointer is still. */
-  animation: orb-breathe 16s ease-in-out infinite;
-}
-
-@keyframes orb-breathe {
-  0%, 100% { opacity: 0.82; }
-  50% { opacity: 1; }
 }
 
 .orb {
@@ -232,20 +224,22 @@
   animation: orb-float-a 19s ease-in-out infinite reverse;
 }
 
+/* Each orb breathes — swelling/brightening then shrinking/dimming — as it
+   drifts, on its own slow cycle, so the colour field keeps gently changing. */
 @keyframes orb-float-a {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(-3rem, 2.5rem, 0) scale(1.12); }
+  0%, 100% { transform: translate3d(0, 0, 0) scale(0.92); opacity: 0.7; }
+  50% { transform: translate3d(-3rem, 2.5rem, 0) scale(1.18); opacity: 1; }
 }
 
 @keyframes orb-float-b {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(3rem, -2rem, 0) scale(1.08); }
+  0%, 100% { transform: translate3d(0, 0, 0) scale(0.94); opacity: 0.74; }
+  50% { transform: translate3d(3rem, -2rem, 0) scale(1.14); opacity: 1; }
 }
 
 @keyframes orb-float-c {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  33% { transform: translate3d(2.5rem, 2rem, 0) scale(1.1); }
-  66% { transform: translate3d(-2rem, -2.5rem, 0) scale(0.94); }
+  0%, 100% { transform: translate3d(0, 0, 0) scale(0.96); opacity: 0.78; }
+  33% { transform: translate3d(2.5rem, 2rem, 0) scale(1.16); opacity: 1; }
+  66% { transform: translate3d(-2rem, -2.5rem, 0) scale(0.9); opacity: 0.66; }
 }
 
 /* Slow flow of the underlying colour wash. */
@@ -329,9 +323,9 @@
   mix-blend-mode: screen;
 }
 
-/* Idle shimmer: a quick orange light-flash that sweeps across each untouched
-   card once per second. Cards stagger via animation-delay (set inline) so a row
-   flashes left-to-right. Fades out on hover, where the cursor spotlight leads. */
+/* Idle shimmer: a slow orange light-flash that sweeps across each untouched
+   card. Cards stagger via animation-delay (set inline) so a row flashes
+   left-to-right. Fades out on hover, where the cursor spotlight leads. */
 .card-idle-shimmer {
   position: absolute;
   inset: 0;
@@ -349,7 +343,7 @@
   background-position: 120% 0;
   mix-blend-mode: screen;
   opacity: 0.9;
-  animation: card-idle-shimmer 1s var(--ease-liquid) infinite;
+  animation: card-idle-shimmer 3s var(--ease-liquid) infinite;
   transition: opacity 0.3s var(--ease-liquid);
 }
 .group:hover .card-idle-shimmer {
@@ -358,50 +352,8 @@
 
 @keyframes card-idle-shimmer {
   0% { background-position: 120% 0; }
-  /* Sweep across in the first ~0.4s, then rest off-screen for the rest of the second. */
-  40%, 100% { background-position: -40% 0; }
-}
-
-/* Cursor focus ring (see CursorGlow.tsx). Desktop-only; recolours by what it's
-   over. Default brand orange; navy over controls; faint orange over cards. */
-.cursor-ring {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 9999px;
-  border: 2px solid rgba(232, 74, 39, 0.85);
-  background-color: rgba(232, 74, 39, 0);
-  pointer-events: none;
-  z-index: 100;
-  opacity: 0;
-  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
-  transition:
-    transform 0.12s ease-out,
-    opacity 0.25s var(--ease-liquid),
-    width 0.2s var(--ease-liquid),
-    height 0.2s var(--ease-liquid),
-    border-color 0.2s var(--ease-liquid),
-    background-color 0.2s var(--ease-liquid);
-}
-/* Over orange controls → partial navy/blue for a complementary pop. */
-.cursor-ring[data-variant="invert"] {
-  border-color: rgba(19, 41, 75, 0.9);
-  background-color: rgba(19, 41, 75, 0.12);
-}
-/* Over a card → larger, faint orange to echo the card's warm glow. */
-.cursor-ring[data-variant="card"] {
-  width: 3rem;
-  height: 3rem;
-  border-color: rgba(232, 74, 39, 0.5);
-  background-color: rgba(232, 74, 39, 0.1);
-}
-@media (hover: hover) and (pointer: fine) {
-  .cursor-ring {
-    display: block;
-  }
+  /* Sweep across in the first part of the cycle, then rest off-screen. */
+  35%, 100% { background-position: -40% 0; }
 }
 .group:hover .card-spotlight::before {
   opacity: 1;
@@ -427,8 +379,7 @@
   }
   .liquid-sheen::after,
   .card-spotlight::before,
-  .card-idle-shimmer,
-  .cursor-ring {
+  .card-idle-shimmer {
     display: none !important;
   }
 

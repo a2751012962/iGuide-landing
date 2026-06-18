@@ -299,7 +299,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                                 className="group block h-full"
                             >
                                 <InteractiveGlassCard
-                                    shimmerDelay={`${i * 0.5}s`}
+                                    shimmerDelay={`${i * 1.5}s`}
                                     className="glass-card glass-shine liquid-sheen overflow-hidden bg-white/60 border-white/60 rounded-3xl p-8 sm:p-10 h-full shadow-glass group-hover:shadow-glass-lg"
                                 >
                                     <CardInner card={card} lang={lang} />
