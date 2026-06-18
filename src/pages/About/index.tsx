@@ -284,7 +284,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
 
                 {/* The Gateway Cards — responsive frosted glass-card surfaces. */}
                 <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto text-left">
-                    {cards.map((card) => (
+                    {cards.map((card, i) => (
                         <m.div
                             key={card.key}
                             initial={{ opacity: 0, y: 20 }}
@@ -298,7 +298,10 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                                 rel="noopener noreferrer"
                                 className="group block h-full"
                             >
-                                <InteractiveGlassCard className="glass-card glass-shine liquid-sheen overflow-hidden bg-white/60 border-white/60 rounded-3xl p-8 sm:p-10 h-full shadow-glass group-hover:shadow-glass-lg">
+                                <InteractiveGlassCard
+                                    shimmerDelay={`${i * 0.5}s`}
+                                    className="glass-card glass-shine liquid-sheen overflow-hidden bg-white/60 border-white/60 rounded-3xl p-8 sm:p-10 h-full shadow-glass group-hover:shadow-glass-lg"
+                                >
                                     <CardInner card={card} lang={lang} />
                                 </InteractiveGlassCard>
                             </a>

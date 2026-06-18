@@ -11,9 +11,12 @@ import { useCallback, useEffect, useRef, type ReactNode, type PointerEvent as Re
 export default function InteractiveGlassCard({
     children,
     className = '',
+    shimmerDelay = '0s',
 }: {
     children: ReactNode;
     className?: string;
+    /** Stagger for the idle shimmer so a row of cards flashes left-to-right. */
+    shimmerDelay?: string;
 }) {
     const ref = useRef<HTMLDivElement>(null);
     const frame = useRef(0);
@@ -127,6 +130,9 @@ export default function InteractiveGlassCard({
             onPointerCancel={handleLeave}
             className={`card-spotlight ${className}`}
         >
+            {/* Idle "breathing" shimmer that loops while the card is untouched
+                (paused on hover, where the cursor spotlight takes over). */}
+            <span className="card-idle-shimmer" aria-hidden="true" style={{ animationDelay: shimmerDelay }} />
             {children}
         </div>
     );

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useLocation, Outlet } from 'react-router-dom';
 import { LazyMotion, domAnimation, m, useReducedMotion } from 'motion/react';
 import GlassBackground from './GlassBackground';
+import CursorGlow from './CursorGlow';
 
 /**
  * Shared shell for every content page. The ambient {@link GlassBackground} lives
@@ -45,6 +46,7 @@ export default function Layout() {
     return (
         <LazyMotion features={domAnimation}>
             <GlassBackground />
+            <CursorGlow />
             <Outlet />
             {showSweep && (
                 <m.div

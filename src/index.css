@@ -161,6 +161,14 @@
   );
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
+  /* Slow, autonomous "breathing" so the colour field keeps gently shifting
+     even when the pointer is still. */
+  animation: orb-breathe 16s ease-in-out infinite;
+}
+
+@keyframes orb-breathe {
+  0%, 100% { opacity: 0.82; }
+  50% { opacity: 1; }
 }
 
 .orb {
@@ -312,12 +320,88 @@
   pointer-events: none;
   opacity: var(--card-glow, 0);
   transition: opacity 0.35s var(--ease-liquid);
+  /* Faint warm-orange wash so touching/hovering a card tints it gently orange. */
   background: radial-gradient(
     36rem 36rem at var(--card-mx, 50%) var(--card-my, 50%),
-    rgba(255, 255, 255, 0.55),
-    rgba(255, 255, 255, 0) 45%
+    rgba(255, 170, 110, 0.45),
+    rgba(255, 170, 110, 0) 45%
   );
   mix-blend-mode: screen;
+}
+
+/* Idle shimmer: a quick orange light-flash that sweeps across each untouched
+   card once per second. Cards stagger via animation-delay (set inline) so a row
+   flashes left-to-right. Fades out on hover, where the cursor spotlight leads. */
+.card-idle-shimmer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 36%,
+    rgba(255, 190, 140, 0.25) 47%,
+    rgba(255, 214, 176, 0.5) 50%,
+    rgba(232, 74, 39, 0.2) 53%,
+    transparent 64%
+  );
+  background-size: 280% 280%;
+  background-position: 120% 0;
+  mix-blend-mode: screen;
+  opacity: 0.9;
+  animation: card-idle-shimmer 1s var(--ease-liquid) infinite;
+  transition: opacity 0.3s var(--ease-liquid);
+}
+.group:hover .card-idle-shimmer {
+  opacity: 0;
+}
+
+@keyframes card-idle-shimmer {
+  0% { background-position: 120% 0; }
+  /* Sweep across in the first ~0.4s, then rest off-screen for the rest of the second. */
+  40%, 100% { background-position: -40% 0; }
+}
+
+/* Cursor focus ring (see CursorGlow.tsx). Desktop-only; recolours by what it's
+   over. Default brand orange; navy over controls; faint orange over cards. */
+.cursor-ring {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  border: 2px solid rgba(232, 74, 39, 0.85);
+  background-color: rgba(232, 74, 39, 0);
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0;
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+  transition:
+    transform 0.12s ease-out,
+    opacity 0.25s var(--ease-liquid),
+    width 0.2s var(--ease-liquid),
+    height 0.2s var(--ease-liquid),
+    border-color 0.2s var(--ease-liquid),
+    background-color 0.2s var(--ease-liquid);
+}
+/* Over orange controls → partial navy/blue for a complementary pop. */
+.cursor-ring[data-variant="invert"] {
+  border-color: rgba(19, 41, 75, 0.9);
+  background-color: rgba(19, 41, 75, 0.12);
+}
+/* Over a card → larger, faint orange to echo the card's warm glow. */
+.cursor-ring[data-variant="card"] {
+  width: 3rem;
+  height: 3rem;
+  border-color: rgba(232, 74, 39, 0.5);
+  background-color: rgba(232, 74, 39, 0.1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .cursor-ring {
+    display: block;
+  }
 }
 .group:hover .card-spotlight::before {
   opacity: 1;
@@ -342,7 +426,9 @@
     filter: none !important;
   }
   .liquid-sheen::after,
-  .card-spotlight::before {
+  .card-spotlight::before,
+  .card-idle-shimmer,
+  .cursor-ring {
     display: none !important;
   }
 
