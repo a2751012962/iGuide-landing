@@ -23,6 +23,13 @@ export default function InteractiveGlassCard({
         typeof window !== 'undefined' &&
         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    // Cursor devices drive the tilt from the pointer; only cursor-less (touch)
+    // devices fall back to the scroll-driven pose. Keeps desktop cards resting
+    // flat until hovered instead of tilting on every scroll.
+    const canHover = () =>
+        typeof window !== 'undefined' &&
+        window.matchMedia('(hover: hover)').matches;
+
     // Scroll-driven pose: tilt the card and slide/brighten its sheen based on
     // where it sits in the viewport. Skipped while the pointer is driving it.
     const applyScroll = useCallback(() => {
@@ -45,7 +52,9 @@ export default function InteractiveGlassCard({
     }, []);
 
     useEffect(() => {
-        if (prefersReducedMotion()) return;
+        // Cursor devices use the pointer handlers below, not scroll; only wire
+        // up the scroll-driven pose on touch (no-hover) devices.
+        if (prefersReducedMotion() || canHover()) return;
         let raf = 0;
         const onScroll = () => {
             if (raf) return;
@@ -99,8 +108,15 @@ export default function InteractiveGlassCard({
             frame.current = 0;
         }
         hovering.current = false;
-        // Hand back to the scroll-driven pose (eased) instead of snapping flat.
-        applyScroll();
+        if (canHover()) {
+            // Cursor devices: ease back to a flat rest pose (no scroll tilt).
+            el.style.transition = 'transform 0.4s var(--ease-liquid)';
+            el.style.transform = '';
+            el.style.setProperty('--card-glow', '0');
+        } else {
+            // Touch (e.g. pointercancel): hand back to the scroll-driven pose.
+            applyScroll();
+        }
     };
 
     return (
