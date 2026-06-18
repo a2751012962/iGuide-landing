@@ -21,13 +21,26 @@ import GlassBackground from './GlassBackground';
 export default function Layout() {
     const location = useLocation();
     const reduceMotion = useReducedMotion();
-    const firstPaint = useRef(true);
+    const prevPath = useRef<string | null>(null);
+
+    // A language toggle only swaps the leading /en|/zh segment, and the SwapText
+    // roll on each page already carries that transition — so the full-viewport
+    // sweep would just pile on. Strip the language segment to tell a same-page
+    // language switch apart from a genuine page navigation.
+    const stripLang = (p: string) => p.replace(/^\/(en|zh)(?=\/|$)/, '') || '/';
+    const prev = prevPath.current;
+    const isLangSwitch =
+        prev !== null &&
+        prev !== location.pathname &&
+        stripLang(prev) === stripLang(location.pathname);
 
     useEffect(() => {
-        firstPaint.current = false;
+        prevPath.current = location.pathname;
     }, [location.pathname]);
 
-    const showSweep = !reduceMotion && !firstPaint.current;
+    // Skip on first paint (prev === null) so there's no fly-in on load, and on
+    // same-page language switches (handled by SwapText instead).
+    const showSweep = !reduceMotion && prev !== null && !isLangSwitch;
 
     return (
         <LazyMotion features={domAnimation}>

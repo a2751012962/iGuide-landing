@@ -114,8 +114,9 @@
   display: grid;
 }
 .swap-text__item {
-  grid-area: 1 / 1;
-  /* Inherit the parent's text alignment when stretched to the grid column. */
+  grid-area: 1 / 1; /* stack both language copies in the same cell */
+  /* Size to the grid column rather than the content's min size, so long text
+     still wraps within its container instead of overflowing. */
   min-width: 0;
 }
 
