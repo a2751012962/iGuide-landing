@@ -3,6 +3,7 @@ import { m, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Compass, Globe, Menu, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLanguageSwitch } from './useLanguageSwitch';
+import SwapText from './SwapText';
 
 type NavLabels = {
     about: string;
@@ -57,7 +58,7 @@ export default function GlassNav({
                     </Link>
                     <div className="hidden md:flex items-center gap-8">
                         {links.map(({ key, label }) => (
-                            <Link key={key} to={`/${lang}/${key}`} className={linkClass(key)}>{label}</Link>
+                            <Link key={key} to={`/${lang}/${key}`} className={linkClass(key)}><SwapText swapKey={lang}>{label}</SwapText></Link>
                         ))}
                     </div>
                     <div className="flex items-center gap-2 sm:gap-3">
@@ -69,11 +70,11 @@ export default function GlassNav({
                             className="interactive flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-[#E84A27] px-2.5 py-1.5 rounded-full hover:bg-white/40"
                         >
                             <Globe className="w-4 h-4" />
-                            {labels.lang}
+                            <SwapText swapKey={lang}>{labels.lang}</SwapText>
                         </button>
-                        <button className="interactive text-sm font-medium text-slate-600 hover:text-[#13294B] hidden sm:block">{labels.login}</button>
+                        <button className="interactive text-sm font-medium text-slate-600 hover:text-[#13294B] hidden sm:block"><SwapText swapKey={lang}>{labels.login}</SwapText></button>
                         <button className="interactive glass-btn text-white bg-[#13294B]/90 border-white/15 px-4 py-2 rounded-full text-sm font-medium hidden sm:block">
-                            {labels.signup}
+                            <SwapText swapKey={lang}>{labels.signup}</SwapText>
                         </button>
                         <button
                             onClick={() => setOpen((v) => !v)}
@@ -105,15 +106,15 @@ export default function GlassNav({
                                         onClick={() => setOpen(false)}
                                         className={`px-3 py-2 rounded-xl hover:bg-white/40 ${linkClass(key)}`}
                                     >
-                                        {label}
+                                        <SwapText swapKey={lang}>{label}</SwapText>
                                     </Link>
                                 ))}
                                 <div className="mt-2 flex gap-2 px-1">
                                     <button className="interactive flex-1 text-sm font-medium text-[#13294B] glass-surface-sm bg-white/50 border border-white/60 px-4 py-2 rounded-full">
-                                        {labels.login}
+                                        <SwapText swapKey={lang}>{labels.login}</SwapText>
                                     </button>
                                     <button className="interactive flex-1 glass-btn text-white bg-[#13294B]/90 border-white/15 px-4 py-2 rounded-full text-sm font-medium">
-                                        {labels.signup}
+                                        <SwapText swapKey={lang}>{labels.signup}</SwapText>
                                     </button>
                                 </div>
                             </div>

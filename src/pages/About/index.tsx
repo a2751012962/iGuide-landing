@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Seo from '../../components/Seo';
 import GlassNav from '../../components/GlassNav';
 import InteractiveGlassCard from '../../components/InteractiveGlassCard';
+import SwapText from '../../components/SwapText';
 
 type GatewayCard = {
     key: string;
@@ -22,7 +23,7 @@ type GatewayCard = {
  * Inner content of a gateway card, laid out on a responsive plugin
  * `glass-card` surface (navy/slate palette over the frosted panel).
  */
-function CardInner({ card }: { card: GatewayCard }) {
+function CardInner({ card, lang }: { card: GatewayCard; lang: 'zh' | 'en' }) {
     const Icon = card.icon;
     return (
         <div className="flex flex-col h-full w-full text-left">
@@ -32,20 +33,20 @@ function CardInner({ card }: { card: GatewayCard }) {
                 >
                     <Icon className="w-7 h-7" />
                 </div>
-                <h2 className="text-2xl font-bold mb-2 text-[#13294B]">{card.title}</h2>
-                <p className="mb-8 text-lg text-slate-500">{card.subtitle}</p>
+                <h2 className="text-2xl font-bold mb-2 text-[#13294B]"><SwapText swapKey={lang}>{card.title}</SwapText></h2>
+                <p className="mb-8 text-lg text-slate-500"><SwapText swapKey={lang} block>{card.subtitle}</SwapText></p>
                 <ul className="space-y-3 mb-10">
                     {card.features.map((feature, idx) => (
                         <li key={idx} className="flex items-center text-slate-600">
                             <CheckCircle2 className="w-5 h-5 mr-3 shrink-0 text-emerald-500" />
-                            <span>{feature}</span>
+                            <SwapText swapKey={lang} block className="flex-1">{feature}</SwapText>
                         </li>
                     ))}
                 </ul>
             </div>
             <div className="mt-auto pt-6 border-t border-white/50">
                 <div className={`flex items-center justify-between font-semibold ${card.accentText}`}>
-                    <span>{card.action}</span>
+                    <SwapText swapKey={lang}>{card.action}</SwapText>
                     <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover:translate-x-1 transition-transform duration-300 ease-liquid glass-surface-sm bg-white/50 border border-white/60">
                         <ArrowRight className="w-5 h-5" />
                     </div>
@@ -220,16 +221,18 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E84A27] opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E84A27]"></span>
                         </span>
-                        {t.hero.badge}
+                        <SwapText swapKey={lang}>{t.hero.badge}</SwapText>
                     </div>
 
                     <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#13294B] tracking-tight mb-6 leading-tight">
-                        {t.hero.title1} <br className="hidden sm:block" />
-                        <span className="gradient-flow">{t.hero.titleHighlight}</span>
+                        <SwapText swapKey={lang} block>
+                            {t.hero.title1} <br className="hidden sm:block" />
+                            <span className="gradient-flow">{t.hero.titleHighlight}</span>
+                        </SwapText>
                     </h1>
 
                     <p className="text-lg sm:text-xl text-slate-500 mb-12 leading-relaxed max-w-2xl mx-auto">
-                        {t.hero.desc}
+                        <SwapText swapKey={lang} block>{t.hero.desc}</SwapText>
                     </p>
                 </m.div>
 
@@ -250,7 +253,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                                 className="group block h-full"
                             >
                                 <InteractiveGlassCard className="glass-card glass-shine liquid-sheen overflow-hidden bg-white/60 border-white/60 rounded-3xl p-8 sm:p-10 h-full shadow-glass group-hover:shadow-glass-lg">
-                                    <CardInner card={card} />
+                                    <CardInner card={card} lang={lang} />
                                 </InteractiveGlassCard>
                             </a>
                         </m.div>
@@ -275,7 +278,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                                 </span>
                             </div>
                             <h3 className="text-3xl font-bold text-[#13294B] mb-2">2,000+</h3>
-                            <p className="text-slate-500 font-medium">{t.stats.users}</p>
+                            <p className="text-slate-500 font-medium"><SwapText swapKey={lang}>{t.stats.users}</SwapText></p>
                         </div>
                         <div className="p-4 pt-8 md:pt-4">
                             <div className="flex justify-center mb-4">
@@ -284,7 +287,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                                 </span>
                             </div>
                             <h3 className="text-3xl font-bold text-[#13294B] mb-2">24</h3>
-                            <p className="text-slate-500 font-medium">{t.stats.dorms}</p>
+                            <p className="text-slate-500 font-medium"><SwapText swapKey={lang}>{t.stats.dorms}</SwapText></p>
                         </div>
                         <div className="p-4 pt-8 md:pt-4">
                             <div className="flex justify-center mb-4">
@@ -293,7 +296,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                                 </span>
                             </div>
                             <h3 className="text-3xl font-bold text-[#13294B] mb-2">98%</h3>
-                            <p className="text-slate-500 font-medium">{t.stats.satisfaction}</p>
+                            <p className="text-slate-500 font-medium"><SwapText swapKey={lang}>{t.stats.satisfaction}</SwapText></p>
                         </div>
                     </div>
                 </m.div>
@@ -308,23 +311,23 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                     className="max-w-7xl mx-auto glass-card glass-shine bg-white/55 border-white/60 rounded-3xl px-6 py-10 sm:px-10 shadow-glass"
                 >
-                    <h3 className="text-xl font-bold text-[#13294B] mb-8 text-center">{t.legal.title}</h3>
+                    <h3 className="text-xl font-bold text-[#13294B] mb-8 text-center"><SwapText swapKey={lang}>{t.legal.title}</SwapText></h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         <div className="lift rounded-2xl p-3 -m-3 hover:bg-white/30">
-                            <h4 className="text-sm font-semibold text-[#13294B] mb-3">{t.legal.affiliation}</h4>
-                            <p className="text-xs text-slate-500 leading-relaxed">{t.legal.affiliationText}</p>
+                            <h4 className="text-sm font-semibold text-[#13294B] mb-3"><SwapText swapKey={lang}>{t.legal.affiliation}</SwapText></h4>
+                            <p className="text-xs text-slate-500 leading-relaxed"><SwapText swapKey={lang} block>{t.legal.affiliationText}</SwapText></p>
                         </div>
                         <div className="lift rounded-2xl p-3 -m-3 hover:bg-white/30">
-                            <h4 className="text-sm font-semibold text-[#13294B] mb-3">{t.legal.aiDisclaimer}</h4>
-                            <p className="text-xs text-slate-500 leading-relaxed">{t.legal.aiDisclaimerText}</p>
+                            <h4 className="text-sm font-semibold text-[#13294B] mb-3"><SwapText swapKey={lang}>{t.legal.aiDisclaimer}</SwapText></h4>
+                            <p className="text-xs text-slate-500 leading-relaxed"><SwapText swapKey={lang} block>{t.legal.aiDisclaimerText}</SwapText></p>
                         </div>
                         <div className="lift rounded-2xl p-3 -m-3 hover:bg-white/30">
-                            <h4 className="text-sm font-semibold text-[#13294B] mb-3">{t.legal.ip}</h4>
-                            <p className="text-xs text-slate-500 leading-relaxed">{t.legal.ipText}</p>
+                            <h4 className="text-sm font-semibold text-[#13294B] mb-3"><SwapText swapKey={lang}>{t.legal.ip}</SwapText></h4>
+                            <p className="text-xs text-slate-500 leading-relaxed"><SwapText swapKey={lang} block>{t.legal.ipText}</SwapText></p>
                         </div>
                         <div className="lift rounded-2xl p-3 -m-3 hover:bg-white/30">
-                            <h4 className="text-sm font-semibold text-[#13294B] mb-3">{t.legal.privacy}</h4>
-                            <p className="text-xs text-slate-500 leading-relaxed">{t.legal.privacyText}</p>
+                            <h4 className="text-sm font-semibold text-[#13294B] mb-3"><SwapText swapKey={lang}>{t.legal.privacy}</SwapText></h4>
+                            <p className="text-xs text-slate-500 leading-relaxed"><SwapText swapKey={lang} block>{t.legal.privacyText}</SwapText></p>
                         </div>
                     </div>
                 </m.div>
@@ -338,13 +341,13 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                         <span className="text-lg font-bold tracking-tight text-[#13294B]">iGuide</span>
                     </div>
                     <p className="text-slate-500 text-xs text-center md:text-left">
-                        {t.footer.copyright}
+                        <SwapText swapKey={lang}>{t.footer.copyright}</SwapText>
                     </p>
                     <div className="flex flex-wrap justify-center gap-4 text-xs font-medium text-slate-500">
-                        <Link to={`/${lang}/terms`} className="link-underline inline-block hover:text-[#E84A27] transition-colors">{t.footer.terms}</Link>
-                        <Link to={`/${lang}/terms`} className="link-underline inline-block hover:text-[#E84A27] transition-colors">{t.footer.privacy}</Link>
-                        <Link to={`/${lang}/terms`} className="link-underline inline-block hover:text-[#E84A27] transition-colors">{t.footer.disclaimer}</Link>
-                        <a href="mailto:support@iguide.chat" className="link-underline inline-block hover:text-[#E84A27] transition-colors">{t.footer.contact}</a>
+                        <Link to={`/${lang}/terms`} className="link-underline inline-block hover:text-[#E84A27] transition-colors"><SwapText swapKey={lang}>{t.footer.terms}</SwapText></Link>
+                        <Link to={`/${lang}/terms`} className="link-underline inline-block hover:text-[#E84A27] transition-colors"><SwapText swapKey={lang}>{t.footer.privacy}</SwapText></Link>
+                        <Link to={`/${lang}/terms`} className="link-underline inline-block hover:text-[#E84A27] transition-colors"><SwapText swapKey={lang}>{t.footer.disclaimer}</SwapText></Link>
+                        <a href="mailto:support@iguide.chat" className="link-underline inline-block hover:text-[#E84A27] transition-colors"><SwapText swapKey={lang}>{t.footer.contact}</SwapText></a>
                     </div>
                 </div>
             </footer>

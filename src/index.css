@@ -102,6 +102,23 @@
   );
 }
 
+/* Language-swap text roll (see SwapText.tsx). Both language copies are stacked
+   in one grid cell so they crossfade in place without nudging the layout; the
+   incoming copy rises up and grows in while the outgoing one shrinks and lifts
+   away. Block variant stretches to its container so headings/paragraphs keep
+   wrapping; inline shrink-wraps for short labels. */
+.swap-text {
+  display: inline-grid;
+}
+.swap-text--block {
+  display: grid;
+}
+.swap-text__item {
+  grid-area: 1 / 1;
+  /* Inherit the parent's text alignment when stretched to the grid column. */
+  min-width: 0;
+}
+
 /* ------------------------------------------------------------------ *
  *  Ambient wallpaper + floating colour orbs (decorative backdrop the
  *  frosted glass refracts — not a glass surface itself). Each orb is heavily

@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Compass, ArrowLeft, Globe } from 'lucide-react';
 import Seo from '../../components/Seo';
+import SwapText from '../../components/SwapText';
 import { useLanguageSwitch } from '../../components/useLanguageSwitch';
 
 export default function Terms({ lang }: { lang: 'zh' | 'en' }) {
@@ -115,7 +116,7 @@ export default function Terms({ lang }: { lang: 'zh' | 'en' }) {
                     <div className="flex justify-between items-center h-14">
                         <Link to={`/${lang}/about`} className="interactive flex items-center gap-2 group">
                             <ArrowLeft className="w-5 h-5 text-slate-400 group-hover:text-[#E84A27] group-hover:-translate-x-0.5 transition-all duration-300 ease-liquid" />
-                            <span className="text-sm font-medium text-slate-600 group-hover:text-[#E84A27] transition-colors">{t.nav.back}</span>
+                            <span className="text-sm font-medium text-slate-600 group-hover:text-[#E84A27] transition-colors"><SwapText swapKey={lang}>{t.nav.back}</SwapText></span>
                         </Link>
                         <div className="flex items-center gap-6">
                             <button
@@ -123,7 +124,7 @@ export default function Terms({ lang }: { lang: 'zh' | 'en' }) {
                                 className="interactive flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-[#E84A27] px-2.5 py-1.5 rounded-full hover:bg-white/40"
                             >
                                 <Globe className="w-4 h-4" />
-                                {t.nav.lang}
+                                <SwapText swapKey={lang}>{t.nav.lang}</SwapText>
                             </button>
                             <div className="flex items-center gap-2">
                                 <Compass className="w-5 h-5 text-[#E84A27]" />
@@ -137,15 +138,15 @@ export default function Terms({ lang }: { lang: 'zh' | 'en' }) {
             {/* Content Area */}
             <main className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
                 <div className="glass-card-elevated glass-shine bg-white/70 border-white/70 shadow-glass-lg rounded-3xl p-8 sm:p-12 prose prose-slate max-w-none">
-                    <h1 className="text-3xl font-bold text-[#13294B] mb-2">{t.title}</h1>
-                    <p className="text-sm text-slate-500 mb-8 border-b border-white/50 pb-8">{t.lastUpdated}</p>
+                    <h1 className="text-3xl font-bold text-[#13294B] mb-2"><SwapText swapKey={lang} block>{t.title}</SwapText></h1>
+                    <p className="text-sm text-slate-500 mb-8 border-b border-white/50 pb-8"><SwapText swapKey={lang}>{t.lastUpdated}</SwapText></p>
 
-                    <p>{t.intro}</p>
+                    <p><SwapText swapKey={lang} block>{t.intro}</SwapText></p>
 
                     {t.sections.map((section, index) => (
                         <div key={index}>
-                            <h3 className="text-xl font-semibold text-[#13294B] mt-10 mb-4">{section.title}</h3>
-                            <p>{section.content}</p>
+                            <h3 className="text-xl font-semibold text-[#13294B] mt-10 mb-4"><SwapText swapKey={lang} block>{section.title}</SwapText></h3>
+                            <p><SwapText swapKey={lang} block>{section.content}</SwapText></p>
                             {section.list && (
                                 <ul className="list-disc pl-6 space-y-2 mt-2">
                                     {section.list.map((item, i) => (
@@ -162,7 +163,7 @@ export default function Terms({ lang }: { lang: 'zh' | 'en' }) {
             <footer className="px-4 sm:px-6 lg:px-8 pb-6 pt-4">
                 <div className="max-w-4xl mx-auto glass-surface-lg bg-white/60 border border-white/60 shadow-glass rounded-2xl py-5 text-center">
                     <p className="text-slate-500 text-xs">
-                        {t.footer}
+                        <SwapText swapKey={lang}>{t.footer}</SwapText>
                     </p>
                 </div>
             </footer>

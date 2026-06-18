@@ -1,5 +1,6 @@
 import Seo from '../../components/Seo';
 import GlassNav from '../../components/GlassNav';
+import SwapText from '../../components/SwapText';
 
 export default function FeatureA({ lang }: { lang: 'zh' | 'en' }) {
     const content = {
@@ -27,8 +28,8 @@ export default function FeatureA({ lang }: { lang: 'zh' | 'en' }) {
             {/* Content */}
             <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
                 <div className="glass-card-elevated glass-shine bg-white/65 border-white/70 shadow-glass-lg rounded-3xl px-8 py-16 sm:px-12 text-center">
-                    <h1 className="text-4xl sm:text-5xl font-extrabold text-[#13294B] mb-6">{t.heading}</h1>
-                    <p className="text-lg text-slate-500">{t.body}</p>
+                    <h1 className="text-4xl sm:text-5xl font-extrabold text-[#13294B] mb-6"><SwapText swapKey={lang} block>{t.heading}</SwapText></h1>
+                    <p className="text-lg text-slate-500"><SwapText swapKey={lang} block>{t.body}</SwapText></p>
                 </div>
             </section>
         </div>
