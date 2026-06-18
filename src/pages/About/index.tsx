@@ -114,7 +114,30 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                 terms: '服务条款',
                 disclaimer: '免责声明',
                 contact: '联系我们'
-            }
+            },
+            faqTitle: '常见问题',
+            faq: [
+                {
+                    q: 'iGuide 与伊利诺伊大学 (UIUC) 有官方关联吗？',
+                    a: 'iGuide 是一个由学生主导的独立项目，与伊利诺伊大学厄巴纳-香槟分校 (UIUC) 及大学住宿部没有任何官方关联，也未获其认可或验证。'
+                },
+                {
+                    q: 'iGuide 是免费的吗？',
+                    a: '是的。iGuide（包括 AI 助手和宿舍查看器 Dorm Viewer）对 UIUC 学生完全免费。'
+                },
+                {
+                    q: 'iGuide 支持哪些语言？',
+                    a: 'iGuide 支持中英双语，可在英文和中文界面下完整使用。'
+                },
+                {
+                    q: 'iGuide 的 AI 助手能帮我做什么？',
+                    a: '这个 24/7 全天候 AI 助手可解答选课建议、教授评分、校园生活、美食与交通等问题，并即时提供中英双语回复。'
+                },
+                {
+                    q: '什么是宿舍查看器 (Dorm Viewer)？',
+                    a: '宿舍查看器让你浏览并比较 UIUC 各宿舍，提供真实学生评价、详细的设施与房型对比，以及周边餐饮与交通便利度分析。'
+                }
+            ]
         },
         en: {
             seo: {
@@ -172,7 +195,30 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                 terms: 'Terms of Service',
                 disclaimer: 'Disclaimers',
                 contact: 'Contact'
-            }
+            },
+            faqTitle: 'Frequently Asked Questions',
+            faq: [
+                {
+                    q: 'Is iGuide affiliated with the University of Illinois (UIUC)?',
+                    a: 'iGuide is an independent, student-led project. It is not affiliated with, endorsed by, or officially connected to the University of Illinois Urbana-Champaign (UIUC) or University Housing.'
+                },
+                {
+                    q: 'Is iGuide free to use?',
+                    a: 'Yes. iGuide, including the AI Chatbot and the Dorm Viewer, is completely free for UIUC students.'
+                },
+                {
+                    q: 'What languages does iGuide support?',
+                    a: 'iGuide is fully bilingual and works in both English and Chinese (中文).'
+                },
+                {
+                    q: 'What can the iGuide AI assistant help with?',
+                    a: 'The 24/7 AI assistant answers questions about course selection, professor ratings, campus life, dining, and transit, with instant bilingual responses.'
+                },
+                {
+                    q: 'What is the Dorm Viewer?',
+                    a: 'The Dorm Viewer lets you explore and compare UIUC dorms with real student reviews, detailed amenities and room-type comparisons, and nearby dining and transit analysis.'
+                }
+            ]
         }
     };
 
@@ -205,7 +251,7 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
 
     return (
         <div className="min-h-screen font-sans text-slate-800 selection:bg-orange-100 selection:text-orange-900">
-            <Seo title={t.seo.title} description={t.seo.description} path="/about" lang={lang} breadcrumbLabel={t.nav.about} />
+            <Seo title={t.seo.title} description={t.seo.description} path="/about" lang={lang} breadcrumbLabel={t.nav.about} faq={t.faq} />
             <GlassNav lang={lang} labels={t.nav} active="about" />
 
             {/* Hero Section */}
@@ -299,6 +345,28 @@ export default function About({ lang }: { lang: 'zh' | 'en' }) {
                             <p className="text-slate-500 font-medium"><SwapText swapKey={lang}>{t.stats.satisfaction}</SwapText></p>
                         </div>
                     </div>
+                </m.div>
+            </section>
+
+            {/* FAQ Section — visible Q&A that backs the FAQPage structured data
+                and adds crawlable, intent-matching content. */}
+            <section className="py-8 px-4 sm:px-6 lg:px-8">
+                <m.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    className="max-w-5xl mx-auto glass-card glass-shine bg-white/55 border-white/60 rounded-3xl px-6 py-10 sm:px-10 shadow-glass"
+                >
+                    <h2 className="text-2xl font-bold text-[#13294B] mb-8 text-center"><SwapText swapKey={lang}>{t.faqTitle}</SwapText></h2>
+                    <dl className="max-w-3xl mx-auto divide-y divide-white/50">
+                        {t.faq.map((item, i) => (
+                            <div key={i} className="lift rounded-2xl px-4 py-5 -mx-1 first:pt-1 hover:bg-white/30">
+                                <dt className="text-base font-semibold text-[#13294B] mb-2"><SwapText swapKey={lang} block>{item.q}</SwapText></dt>
+                                <dd className="text-sm text-slate-500 leading-relaxed"><SwapText swapKey={lang} block>{item.a}</SwapText></dd>
+                            </div>
+                        ))}
+                    </dl>
                 </m.div>
             </section>
 
