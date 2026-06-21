@@ -3,10 +3,9 @@ import { useEffect, useRef } from 'react';
 /**
  * Ambient "Liquid Glass" wallpaper. A fixed, full-viewport layer of soft
  * colour orbs that drift behind the page's frosted glass panels so the glass
- * has something to refract. The orbs live inside a `filter: url(#goo)` layer
- * so overlapping blobs fuse into organic, lava-lamp-style liquid shapes, and
- * the whole field drifts gently toward the cursor. Purely decorative —
- * hidden from assistive tech.
+ * has something to refract. Each orb is heavily blurred so overlapping blobs
+ * melt into soft, lava-lamp-style colour clouds, and the whole field drifts
+ * gently toward the cursor. Purely decorative — hidden from assistive tech.
  */
 export default function GlassBackground() {
     const rootRef = useRef<HTMLDivElement>(null);
@@ -38,31 +37,33 @@ export default function GlassBackground() {
         };
     }, []);
 
+    // Scroll parallax: drift the orb field upward at a fraction of the scroll
+    // distance so it reads as a deeper layer than the page content. Same
+    // client-only, rAF-throttled, reduced-motion-aware contract as above.
+    useEffect(() => {
+        const el = rootRef.current;
+        if (!el) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        let frame = 0;
+        const onScroll = () => {
+            if (frame) return;
+            frame = requestAnimationFrame(() => {
+                frame = 0;
+                el.style.setProperty('--sy', `${(-window.scrollY * 0.18).toFixed(1)}px`);
+            });
+        };
+
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+            if (frame) cancelAnimationFrame(frame);
+        };
+    }, []);
+
     return (
         <div className="ambient-bg" aria-hidden="true" ref={rootRef}>
-            {/* Off-screen SVG filter that fuses overlapping blurred orbs into
-                merging liquid shapes (blur → contrast threshold). */}
-            <svg
-                width="0"
-                height="0"
-                style={{ position: 'absolute' }}
-                aria-hidden="true"
-                focusable="false"
-            >
-                <defs>
-                    <filter id="goo">
-                        <feGaussianBlur in="SourceGraphic" stdDeviation="14" result="blur" />
-                        <feColorMatrix
-                            in="blur"
-                            mode="matrix"
-                            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9"
-                            result="goo"
-                        />
-                        <feBlend in="SourceGraphic" in2="goo" />
-                    </filter>
-                </defs>
-            </svg>
-
             <div className="orb-field">
                 <div className="orb orb-1" />
                 <div className="orb orb-2" />
